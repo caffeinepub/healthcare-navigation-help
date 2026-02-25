@@ -1,0 +1,134 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-25T20:37:58.161Z",
+  "summary": "The diff implements all 11 requirements with a comprehensive full-stack healthcare navigation web app. The implementation covers hero section, find care, insurance glossary, appointment checklist, medical bill guide, financial assistance, community resources, guided journeys, educational workshops, navigation bar/about page, and visual theming. A few specific acceptance criteria items show weak or unclear evidence due to file truncation, but overall coverage appears high. Minor gaps are noted around explicit seeding minimums (15 insurance terms, 10 checklist items, 6 community resources, 4+ workshops, 5+ assistance programs) since the backend file was truncated after showing only one of each, and the how-to-apply guidance field is missing from AssistanceProgram.",
+  "missing_requirements": [
+    {
+      "id": "REQ-3",
+      "requirement": "At least 15 common insurance terms are stored in the backend and displayed on the frontend.",
+      "reason": "The truncated backend/main.mo shows only one insurance term ('Deductible') being seeded in initializeData(). Due to truncation we cannot confirm 15 terms are seeded.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Checklist is printable or copyable for offline use.",
+      "reason": "The CSS file includes print media queries hiding nav/footer, but no evidence of a print button, copy-to-clipboard button, or explicit print/copy action in AppointmentPrepPage or ChecklistSection components is visible in the diff.",
+      "evidence": [
+        "frontend/src/components/ChecklistSection.tsx",
+        "frontend/src/index.css"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Each program listing includes name, eligibility summary, and how-to-apply guidance.",
+      "reason": "The AssistanceProgram type in the backend includes name, description, eligibility, and contactInfo but no explicit howToApply field. The ProgramCard component does not render any how-to-apply guidance either.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/ProgramCard.tsx"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Programs are filterable or tagged by type (public coverage, hospital aid, etc.).",
+      "reason": "The AssistanceProgram backend type has no type or tag field. The ProgramCard accepts an optional tag prop but the data model has no type/tag property to source it from.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/ProgramCard.tsx"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "At least 6 local resources are stored in the backend and rendered in a directory/list view.",
+      "reason": "The truncated backend shows only one community resource seeded. Cannot confirm 6 are present due to truncation.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "At least 4 resource/workshop entries are seeded in the backend.",
+      "reason": "Only one workshop is seeded in the visible portion of backend/main.mo. File is truncated so full seeding cannot be confirmed.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Content is organized by category (guides, workshops, advocacy skills).",
+      "reason": "The Workshop backend type has no category field, making backend-driven category organization impossible. The WorkshopCard accepts an optional category prop but the data model does not store it.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/WorkshopCard.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Dark mode CSS variables are implemented in index.css.",
+      "reason": "The build request specifies a warm teal-green and warm white color palette but does not request dark mode support. A full dark mode variable set is defined under .dark selector.",
+      "evidence": [
+        "frontend/src/index.css"
+      ]
+    },
+    {
+      "description": "Internet Identity authentication hooks (useInternetIdentity, useActor) are included in the frontend.",
+      "reason": "The build request explicitly lists user authentication as a non-goal, yet full Internet Identity login/auth infrastructure is implemented.",
+      "evidence": [
+        "frontend/src/hooks/useInternetIdentity.ts",
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "A dedicated /education route and EducationPage are created as a separate nav item beyond the specified sections.",
+      "reason": "The build request nav specification in REQ-10 does not list a separate Education link; educational resources are part of REQ-9 Resources. The nav shows Education as an additional standalone entry.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Navigation.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.62,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/CalloutBox.tsx",
+    "frontend/src/components/ChecklistSection.tsx",
+    "frontend/src/components/GuideStep.tsx",
+    "frontend/src/components/HeroSection.tsx",
+    "frontend/src/components/InsuranceTermCard.tsx",
+    "frontend/src/components/JourneyCard.tsx",
+    "frontend/src/components/Navigation.tsx",
+    "frontend/src/components/ProgramCard.tsx",
+    "frontend/src/components/ProgressIndicator.tsx",
+    "frontend/src/components/ResourceDirectoryItem.tsx",
+    "frontend/src/components/ServiceCategoryCard.tsx",
+    "frontend/src/components/StepNavigator.tsx",
+    "frontend/src/components/WorkshopCard.tsx",
+    "frontend/src/data/journeys.ts",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/AboutPage.tsx",
+    "frontend/src/pages/AppointmentPrepPage.tsx",
+    "frontend/src/pages/EducationPage.tsx",
+    "frontend/src/pages/FinancialAssistancePage.tsx",
+    "frontend/src/pages/FindCarePage.tsx",
+    "frontend/src/pages/GuidedJourneyPage.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/InsuranceGuidePage.tsx",
+    "frontend/src/pages/MedicalBillGuidePage.tsx",
+    "frontend/src/pages/NavigationToolsPage.tsx",
+    "frontend/src/pages/ResourcesPage.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

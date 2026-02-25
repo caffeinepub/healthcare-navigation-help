@@ -1,0 +1,5 @@
+{
+  "frontend/src/App.tsx": "Main application entry point that sets up TanStack Router with a root layout (Navigation + Footer via Outlet) and registers all 11 page routes including the dynamic journey route.",
+  "frontend/src/pages/EducationPage.tsx": "Education & Workshops page that fetches workshops from the backend (with rich fallback data), displays them in a filterable grid by category (Workshop, Guide, Advocacy), and uses the WorkshopCard component.",
+  "frontend/src/pages/AboutPage.tsx": "About/Vision page presenting the program mission statement, what we do (6 service cards), who we serve, service area (Leominster MA), and long-term vision with calls-to-action."
+}

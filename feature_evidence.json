@@ -1,0 +1,240 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-hero-home-section-that-introduces-healthcare-navigation-help-states-the-mission-no-one-should-miss-medical-care-because-the-system-is-confusing-overwhelming-or-hard-to-afford-and-provides-clear-calls-to-action-to-explore-tools-and-resources",
+      "featureTitle": "Create a Hero/Home section that introduces Healthcare Navigation Help, states the mission ('No one should miss medical care because the system is confusing, overwhelming, or hard to afford'), and provides clear calls-to-action to explore tools and resources.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/HeroSection.tsx",
+        "frontend/src/pages/HomePage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-find-affordable-care-resource-finder-that-presents-categorized-healthcare-service-options-urgent-care-routine-visits-specialized-treatment-community-health-centers-with-descriptions-helping-users-understand-where-to-go-for-different-health-needs",
+      "featureTitle": "Build a 'Find Affordable Care' resource finder that presents categorized healthcare service options (urgent care, routine visits, specialized treatment, community health centers) with descriptions helping users understand where to go for different health needs.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ServiceCategoryCard.tsx",
+        "frontend/src/pages/FindCarePage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-an-insurance-terms-coverage-explainer-section-with-a-searchable-glossary-of-common-insurance-terms-e-g-deductible-copay-premium-network-eob-and-short-plain-language-definitions-to-help-first-time-insurance-users-understand-their-coverage",
+      "featureTitle": "Build an Insurance Terms & Coverage Explainer section with a searchable glossary of common insurance terms (e.g., deductible, copay, premium, network, EOB) and short plain-language definitions to help first-time insurance users understand their coverage.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/InsuranceTermCard.tsx",
+        "frontend/src/pages/InsuranceGuidePage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-an-interactive-appointment-preparation-checklist-tool-that-guides-users-through-what-questions-to-ask-what-documents-to-bring-and-how-to-advocate-for-their-needs-before-a-doctor-or-hospital-visit-users-can-check-off-items-and-see-their-progress",
+      "featureTitle": "Create an interactive Appointment Preparation Checklist tool that guides users through what questions to ask, what documents to bring, and how to advocate for their needs before a doctor or hospital visit. Users can check off items and see their progress.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ChecklistSection.tsx",
+        "frontend/src/components/ProgressIndicator.tsx",
+        "frontend/src/pages/AppointmentPrepPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-medical-bill-guide-section-that-explains-how-to-read-a-medical-bill-how-to-identify-common-billing-errors-and-what-payment-plan-or-financial-assistance-options-are-typically-available-present-content-in-a-step-by-step-format",
+      "featureTitle": "Build a Medical Bill Guide section that explains how to read a medical bill, how to identify common billing errors, and what payment plan or financial assistance options are typically available. Present content in a step-by-step format.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/CalloutBox.tsx",
+        "frontend/src/components/GuideStep.tsx",
+        "frontend/src/pages/MedicalBillGuidePage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-financial-assistance-programs-finder-that-lists-public-health-coverage-programs-and-hospital-financial-aid-options-e-g-masshealth-health-safety-net-hospital-charity-care-with-brief-descriptions-and-guidance-on-how-to-apply",
+      "featureTitle": "Create a Financial Assistance Programs finder that lists public health coverage programs and hospital financial aid options (e.g., MassHealth, Health Safety Net, hospital charity care) with brief descriptions and guidance on how to apply.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ProgramCard.tsx",
+        "frontend/src/pages/FinancialAssistancePage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-community-resource-map-section-that-lists-local-healthcare-resources-in-leominster-and-surrounding-massachusetts-communities-including-community-health-centers-free-clinics-and-support-services-displayed-as-a-structured-directory-with-name-type-and-contact-access-information",
+      "featureTitle": "Build a Community Resource Map section that lists local healthcare resources in Leominster and surrounding Massachusetts communities, including community health centers, free clinics, and support services, displayed as a structured directory with name, type, and contact/access information.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ResourceDirectoryItem.tsx",
+        "frontend/src/pages/ResourcesPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-step-by-step-navigation-tools-section-featuring-guided-healthcare-journey-flows-e-g-i-need-care-but-have-no-insurance-i-received-a-confusing-bill-i-need-to-find-a-specialist-each-journey-presents-a-linear-sequence-of-steps-with-explanations-and-recommended-actions",
+      "featureTitle": "Create a Step-by-Step Navigation Tools section featuring guided healthcare journey flows (e.g., 'I need care but have no insurance', 'I received a confusing bill', 'I need to find a specialist'). Each journey presents a linear sequence of steps with explanations and recommended actions.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/JourneyCard.tsx",
+        "frontend/src/components/StepNavigator.tsx",
+        "frontend/src/data/journeys.ts",
+        "frontend/src/pages/GuidedJourneyPage.tsx",
+        "frontend/src/pages/NavigationToolsPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-an-educational-resources-workshops-section-that-showcases-available-educational-guides-upcoming-or-recorded-learning-sessions-and-advocacy-skill-building-content-include-a-listing-for-workshops-with-title-description-and-audience",
+      "featureTitle": "Build an Educational Resources & Workshops section that showcases available educational guides, upcoming or recorded learning sessions, and advocacy skill-building content. Include a listing for workshops with title, description, and audience.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/WorkshopCard.tsx",
+        "frontend/src/pages/EducationPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-persistent-navigation-bar-and-an-about-vision-page-describing-the-program-mission-who-it-serves-families-youth-first-time-insurance-users-people-with-confusing-bills-the-service-area-leominster-ma-and-surrounding-massachusetts-communities-and-the-long-term-vision-of-expanding-impact-regionally-and-nationally",
+      "featureTitle": "Add a persistent navigation bar and an About/Vision page describing the program mission, who it serves (families, youth, first-time insurance users, people with confusing bills), the service area (Leominster, MA and surrounding Massachusetts communities), and the long-term vision of expanding impact regionally and nationally.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Navigation.tsx",
+        "frontend/src/pages/AboutPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-warm-trustworthy-and-approachable-visual-theme-throughout-the-app-use-a-calming-teal-green-and-warm-white-color-palette-with-clear-readable-typography-the-design-should-feel-welcoming-not-clinical-conveying-community-support-rather-than-a-hospital-or-insurance-company-enforce-this-style-consistently-across-all-pages-and-components",
+      "featureTitle": "Apply a warm, trustworthy, and approachable visual theme throughout the app. Use a calming teal-green and warm white color palette with clear readable typography. The design should feel welcoming, not clinical — conveying community support rather than a hospital or insurance company. Enforce this style consistently across all pages and components.",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

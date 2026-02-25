@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Healthcare Navigation Help is a community support web app/program for individuals and families in Leominster, MA and surrounding communities. It helps users find affordable care, understand insurance, prepare for appointments, manage medical bills, access financial assistance programs, and build healthcare advocacy skills. The vision is to expand from local to national/global impact.",
+  "architectural_notes": [
+    "Target audience: individuals and families in Leominster, MA and surrounding communities, including first-time insurance users, youth, and those facing medical bills",
+    "Program focuses on real-life navigation skills and actionable tools, not just informational content",
+    "Vision includes scalability from local/regional to national and global reach"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Warm and welcoming hero illustration showing a diverse family or community group with a subtle healthcare/navigation theme — soft teal and green tones, friendly and approachable, no clinical imagery (hero-banner.dim_1440x600.png)\n- Simple flat icon of a compass or map pin blended with a green cross or heart symbol, representing healthcare navigation (logo-icon.dim_128x128.png)\n- Soft abstract background pattern with gentle teal wave or leaf motifs for section backgrounds (section-bg-pattern.dim_1440x400.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-hero-home-section-that-introduces-healthcare-navigation-help-states-the-mission-no-one-should-miss-medical-care-because-the-system-is-confusing-overwhelming-or-hard-to-afford-and-provides-clear-calls-to-action-to-explore-tools-and-resources",
+      "title": "Create a Hero/Home section that introduces Healthcare Navigation Help, states the mission ('No one should miss medical care because the system is confusing, overwhelming, or hard to afford'), and provides clear calls-to-action to explore tools and resources.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-find-affordable-care-resource-finder-that-presents-categorized-healthcare-service-options-urgent-care-routine-visits-specialized-treatment-community-health-centers-with-descriptions-helping-users-understand-where-to-go-for-different-health-needs",
+      "title": "Build a 'Find Affordable Care' resource finder that presents categorized healthcare service options (urgent care, routine visits, specialized treatment, community health centers) with descriptions helping users understand where to go for different health needs.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-an-insurance-terms-coverage-explainer-section-with-a-searchable-glossary-of-common-insurance-terms-e-g-deductible-copay-premium-network-eob-and-short-plain-language-definitions-to-help-first-time-insurance-users-understand-their-coverage",
+      "title": "Build an Insurance Terms & Coverage Explainer section with a searchable glossary of common insurance terms (e.g., deductible, copay, premium, network, EOB) and short plain-language definitions to help first-time insurance users understand their coverage.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-interactive-appointment-preparation-checklist-tool-that-guides-users-through-what-questions-to-ask-what-documents-to-bring-and-how-to-advocate-for-their-needs-before-a-doctor-or-hospital-visit-users-can-check-off-items-and-see-their-progress",
+      "title": "Create an interactive Appointment Preparation Checklist tool that guides users through what questions to ask, what documents to bring, and how to advocate for their needs before a doctor or hospital visit. Users can check off items and see their progress.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-medical-bill-guide-section-that-explains-how-to-read-a-medical-bill-how-to-identify-common-billing-errors-and-what-payment-plan-or-financial-assistance-options-are-typically-available-present-content-in-a-step-by-step-format",
+      "title": "Build a Medical Bill Guide section that explains how to read a medical bill, how to identify common billing errors, and what payment plan or financial assistance options are typically available. Present content in a step-by-step format.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-financial-assistance-programs-finder-that-lists-public-health-coverage-programs-and-hospital-financial-aid-options-e-g-masshealth-health-safety-net-hospital-charity-care-with-brief-descriptions-and-guidance-on-how-to-apply",
+      "title": "Create a Financial Assistance Programs finder that lists public health coverage programs and hospital financial aid options (e.g., MassHealth, Health Safety Net, hospital charity care) with brief descriptions and guidance on how to apply.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-community-resource-map-section-that-lists-local-healthcare-resources-in-leominster-and-surrounding-massachusetts-communities-including-community-health-centers-free-clinics-and-support-services-displayed-as-a-structured-directory-with-name-type-and-contact-access-information",
+      "title": "Build a Community Resource Map section that lists local healthcare resources in Leominster and surrounding Massachusetts communities, including community health centers, free clinics, and support services, displayed as a structured directory with name, type, and contact/access information.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-step-by-step-navigation-tools-section-featuring-guided-healthcare-journey-flows-e-g-i-need-care-but-have-no-insurance-i-received-a-confusing-bill-i-need-to-find-a-specialist-each-journey-presents-a-linear-sequence-of-steps-with-explanations-and-recommended-actions",
+      "title": "Create a Step-by-Step Navigation Tools section featuring guided healthcare journey flows (e.g., 'I need care but have no insurance', 'I received a confusing bill', 'I need to find a specialist'). Each journey presents a linear sequence of steps with explanations and recommended actions.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-an-educational-resources-workshops-section-that-showcases-available-educational-guides-upcoming-or-recorded-learning-sessions-and-advocacy-skill-building-content-include-a-listing-for-workshops-with-title-description-and-audience",
+      "title": "Build an Educational Resources & Workshops section that showcases available educational guides, upcoming or recorded learning sessions, and advocacy skill-building content. Include a listing for workshops with title, description, and audience.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-persistent-navigation-bar-and-an-about-vision-page-describing-the-program-mission-who-it-serves-families-youth-first-time-insurance-users-people-with-confusing-bills-the-service-area-leominster-ma-and-surrounding-massachusetts-communities-and-the-long-term-vision-of-expanding-impact-regionally-and-nationally",
+      "title": "Add a persistent navigation bar and an About/Vision page describing the program mission, who it serves (families, youth, first-time insurance users, people with confusing bills), the service area (Leominster, MA and surrounding Massachusetts communities), and the long-term vision of expanding impact regionally and nationally.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-warm-trustworthy-and-approachable-visual-theme-throughout-the-app-use-a-calming-teal-green-and-warm-white-color-palette-with-clear-readable-typography-the-design-should-feel-welcoming-not-clinical-conveying-community-support-rather-than-a-hospital-or-insurance-company-enforce-this-style-consistently-across-all-pages-and-components",
+      "title": "Apply a warm, trustworthy, and approachable visual theme throughout the app. Use a calming teal-green and warm white color palette with clear readable typography. The design should feel welcoming, not clinical — conveying community support rather than a hospital or insurance company. Enforce this style consistently across all pages and components.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Find low-cost or affordable healthcare services tool/resource finder",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Insurance terms and coverage explainer/educational guide",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Appointment preparation checklist and guidance tool",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Medical bill understanding and payment options guide",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Financial assistance and public health coverage program finder",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Community resource mapping for local healthcare services",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Step-by-step navigation tools and checklists for healthcare journeys",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Educational workshops and learning sessions section",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Advocacy skill-building and real-life practice scenarios",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Healthcare Navigation Help",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
