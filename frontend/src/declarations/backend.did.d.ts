@@ -17,8 +17,11 @@ export interface AssistanceProgram {
   'eligibility' : string,
 }
 export interface CommunityResource {
+  'lat' : [] | [number],
+  'lng' : [] | [number],
   'name' : string,
   'website' : [] | [string],
+  'zipCode' : string,
   'resourceType' : string,
   'address' : string,
   'phone' : string,
@@ -30,13 +33,6 @@ export interface HealthcareService {
   'category' : string,
 }
 export interface InsuranceTerm { 'term' : string, 'definition' : string }
-export interface Workshop {
-  'title' : string,
-  'date' : [] | [string],
-  'description' : string,
-  'audience' : string,
-  'location' : [] | [string],
-}
 export interface _CaffeineStorageCreateCertificateResult {
   'method' : string,
   'blob_hash' : string,
@@ -69,7 +65,7 @@ export interface _SERVICE {
   'getHealthcareServices' : ActorMethod<[], Array<HealthcareService>>,
   'getInsuranceTerms' : ActorMethod<[], Array<InsuranceTerm>>,
   'getResourcesByType' : ActorMethod<[string], Array<CommunityResource>>,
-  'getWorkshops' : ActorMethod<[], Array<Workshop>>,
+  'getResourcesByZipCode' : ActorMethod<[string], Array<CommunityResource>>,
   'initializeData' : ActorMethod<[], undefined>,
   'searchInsuranceTerm' : ActorMethod<[string], InsuranceTerm>,
 }

@@ -1,11 +1,13 @@
 import Map "mo:core/Map";
-import List "mo:core/List";
 import Text "mo:core/Text";
 import Order "mo:core/Order";
 import Iter "mo:core/Iter";
 import Runtime "mo:core/Runtime";
+import Float "mo:core/Float";
 import MixinStorage "blob-storage/Mixin";
+import Migration "migration";
 
+(with migration = Migration.run)
 actor {
   include MixinStorage();
 
@@ -49,13 +51,16 @@ actor {
     };
   };
 
-  // Community Resource
+  // Community Resource with Zip Code and Coordinates
   type CommunityResource = {
     resourceType : Text;
     name : Text;
     address : Text;
     phone : Text;
     website : ?Text;
+    zipCode : Text;
+    lat : ?Float;
+    lng : ?Float;
   };
 
   module CommunityResource {
@@ -64,27 +69,11 @@ actor {
     };
   };
 
-  // Educational Workshop
-  type Workshop = {
-    title : Text;
-    description : Text;
-    audience : Text;
-    date : ?Text;
-    location : ?Text;
-  };
-
-  module Workshop {
-    public func compare(a : Workshop, b : Workshop) : Order.Order {
-      Text.compare(a.title, b.title);
-    };
-  };
-
   // Persistent Data Structures
   let healthcareServices = Map.empty<Text, HealthcareService>();
   let insuranceTerms = Map.empty<Text, InsuranceTerm>();
   let assistancePrograms = Map.empty<Text, AssistanceProgram>();
   let communityResources = Map.empty<Text, CommunityResource>();
-  let workshops = Map.empty<Text, Workshop>();
 
   // Initialize data
   public shared ({ caller }) func initializeData() : async () {
@@ -113,25 +102,18 @@ actor {
     };
     assistancePrograms.add(massHealth.name, massHealth);
 
-    // Community Resource
+    // Community Resource with Zip Code and Coordinates
     let comHealthCenter : CommunityResource = {
       resourceType = "Community Health Center";
       name = "Leominster Community Medical Center";
       address = "123 Main Street, Leominster, MA";
       phone = "978-555-4567";
       website = ?"www.leominsterchc.org";
+      zipCode = "01453";
+      lat = ?42.5251;
+      lng = ?(-71.7598);
     };
     communityResources.add(comHealthCenter.name, comHealthCenter);
-
-    // Workshop
-    let healthNavWorkshop : Workshop = {
-      title = "Navigating Health Insurance 101";
-      description = "Learn the basics of health insurance, copays, deductibles, and coverage.";
-      audience = "Open to all ages";
-      date = ?"2024-06-15";
-      location = ?"Leominster Public Library";
-    };
-    workshops.add(healthNavWorkshop.title, healthNavWorkshop);
   };
 
   // Query Functions
@@ -151,10 +133,6 @@ actor {
     communityResources.values().toArray().sort();
   };
 
-  public query ({ caller }) func getWorkshops() : async [Workshop] {
-    workshops.values().toArray().sort();
-  };
-
   public query ({ caller }) func searchInsuranceTerm(term : Text) : async InsuranceTerm {
     switch (insuranceTerms.get(term)) {
       case (null) { Runtime.trap("Term not found") };
@@ -165,6 +143,13 @@ actor {
   public query ({ caller }) func getResourcesByType(resourceType : Text) : async [CommunityResource] {
     communityResources.values().filter(
       func(resource) { resource.resourceType == resourceType }
+    ).toArray().sort();
+  };
+
+  // New function to get resources by zip code
+  public query ({ caller }) func getResourcesByZipCode(zipCode : Text) : async [CommunityResource] {
+    communityResources.values().filter(
+      func(resource) { resource.zipCode == zipCode }
     ).toArray().sort();
   };
 };

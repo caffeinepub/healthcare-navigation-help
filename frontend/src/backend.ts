@@ -89,16 +89,12 @@ export class ExternalBlob {
         return this;
     }
 }
-export interface Workshop {
-    title: string;
-    date?: string;
-    description: string;
-    audience: string;
-    location?: string;
-}
 export interface CommunityResource {
+    lat?: number;
+    lng?: number;
     name: string;
     website?: string;
+    zipCode: string;
     resourceType: string;
     address: string;
     phone: string;
@@ -142,11 +138,11 @@ export interface backendInterface {
     getHealthcareServices(): Promise<Array<HealthcareService>>;
     getInsuranceTerms(): Promise<Array<InsuranceTerm>>;
     getResourcesByType(resourceType: string): Promise<Array<CommunityResource>>;
-    getWorkshops(): Promise<Array<Workshop>>;
+    getResourcesByZipCode(zipCode: string): Promise<Array<CommunityResource>>;
     initializeData(): Promise<void>;
     searchInsuranceTerm(term: string): Promise<InsuranceTerm>;
 }
-import type { CommunityResource as _CommunityResource, HealthcareService as _HealthcareService, Workshop as _Workshop, _CaffeineStorageRefillInformation as __CaffeineStorageRefillInformation, _CaffeineStorageRefillResult as __CaffeineStorageRefillResult } from "./declarations/backend.did.d.ts";
+import type { CommunityResource as _CommunityResource, HealthcareService as _HealthcareService, _CaffeineStorageRefillInformation as __CaffeineStorageRefillInformation, _CaffeineStorageRefillResult as __CaffeineStorageRefillResult } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async _caffeineStorageBlobIsLive(arg0: Uint8Array): Promise<boolean> {
@@ -265,14 +261,14 @@ export class Backend implements backendInterface {
         if (this.processError) {
             try {
                 const result = await this.actor.getHealthcareServices();
-                return from_candid_vec_n12(this._uploadFile, this._downloadFile, result);
+                return from_candid_vec_n13(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
             const result = await this.actor.getHealthcareServices();
-            return from_candid_vec_n12(this._uploadFile, this._downloadFile, result);
+            return from_candid_vec_n13(this._uploadFile, this._downloadFile, result);
         }
     }
     async getInsuranceTerms(): Promise<Array<InsuranceTerm>> {
@@ -303,18 +299,18 @@ export class Backend implements backendInterface {
             return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
         }
     }
-    async getWorkshops(): Promise<Array<Workshop>> {
+    async getResourcesByZipCode(arg0: string): Promise<Array<CommunityResource>> {
         if (this.processError) {
             try {
-                const result = await this.actor.getWorkshops();
-                return from_candid_vec_n15(this._uploadFile, this._downloadFile, result);
+                const result = await this.actor.getResourcesByZipCode(arg0);
+                return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
             } catch (e) {
                 this.processError(e);
                 throw new Error("unreachable");
             }
         } else {
-            const result = await this.actor.getWorkshops();
-            return from_candid_vec_n15(this._uploadFile, this._downloadFile, result);
+            const result = await this.actor.getResourcesByZipCode(arg0);
+            return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
         }
     }
     async initializeData(): Promise<void> {
@@ -349,16 +345,16 @@ export class Backend implements backendInterface {
 function from_candid_CommunityResource_n9(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _CommunityResource): CommunityResource {
     return from_candid_record_n10(_uploadFile, _downloadFile, value);
 }
-function from_candid_HealthcareService_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _HealthcareService): HealthcareService {
-    return from_candid_record_n14(_uploadFile, _downloadFile, value);
-}
-function from_candid_Workshop_n16(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Workshop): Workshop {
-    return from_candid_record_n17(_uploadFile, _downloadFile, value);
+function from_candid_HealthcareService_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _HealthcareService): HealthcareService {
+    return from_candid_record_n15(_uploadFile, _downloadFile, value);
 }
 function from_candid__CaffeineStorageRefillResult_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: __CaffeineStorageRefillResult): _CaffeineStorageRefillResult {
     return from_candid_record_n5(_uploadFile, _downloadFile, value);
 }
-function from_candid_opt_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [string]): string | null {
+function from_candid_opt_n11(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [number]): number | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [string]): string | null {
     return value.length === 0 ? null : value[0];
 }
 function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [boolean]): boolean | null {
@@ -368,27 +364,36 @@ function from_candid_opt_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Ar
     return value.length === 0 ? null : value[0];
 }
 function from_candid_record_n10(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    lat: [] | [number];
+    lng: [] | [number];
     name: string;
     website: [] | [string];
+    zipCode: string;
     resourceType: string;
     address: string;
     phone: string;
 }): {
+    lat?: number;
+    lng?: number;
     name: string;
     website?: string;
+    zipCode: string;
     resourceType: string;
     address: string;
     phone: string;
 } {
     return {
+        lat: record_opt_to_undefined(from_candid_opt_n11(_uploadFile, _downloadFile, value.lat)),
+        lng: record_opt_to_undefined(from_candid_opt_n11(_uploadFile, _downloadFile, value.lng)),
         name: value.name,
-        website: record_opt_to_undefined(from_candid_opt_n11(_uploadFile, _downloadFile, value.website)),
+        website: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.website)),
+        zipCode: value.zipCode,
         resourceType: value.resourceType,
         address: value.address,
         phone: value.phone
     };
 }
-function from_candid_record_n14(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+function from_candid_record_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
     contactInfo: [] | [string];
     name: string;
     description: string;
@@ -400,31 +405,10 @@ function from_candid_record_n14(_uploadFile: (file: ExternalBlob) => Promise<Uin
     category: string;
 } {
     return {
-        contactInfo: record_opt_to_undefined(from_candid_opt_n11(_uploadFile, _downloadFile, value.contactInfo)),
+        contactInfo: record_opt_to_undefined(from_candid_opt_n12(_uploadFile, _downloadFile, value.contactInfo)),
         name: value.name,
         description: value.description,
         category: value.category
-    };
-}
-function from_candid_record_n17(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
-    title: string;
-    date: [] | [string];
-    description: string;
-    audience: string;
-    location: [] | [string];
-}): {
-    title: string;
-    date?: string;
-    description: string;
-    audience: string;
-    location?: string;
-} {
-    return {
-        title: value.title,
-        date: record_opt_to_undefined(from_candid_opt_n11(_uploadFile, _downloadFile, value.date)),
-        description: value.description,
-        audience: value.audience,
-        location: record_opt_to_undefined(from_candid_opt_n11(_uploadFile, _downloadFile, value.location))
     };
 }
 function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
@@ -439,11 +423,8 @@ function from_candid_record_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint
         topped_up_amount: record_opt_to_undefined(from_candid_opt_n7(_uploadFile, _downloadFile, value.topped_up_amount))
     };
 }
-function from_candid_vec_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_HealthcareService>): Array<HealthcareService> {
-    return value.map((x)=>from_candid_HealthcareService_n13(_uploadFile, _downloadFile, x));
-}
-function from_candid_vec_n15(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_Workshop>): Array<Workshop> {
-    return value.map((x)=>from_candid_Workshop_n16(_uploadFile, _downloadFile, x));
+function from_candid_vec_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_HealthcareService>): Array<HealthcareService> {
+    return value.map((x)=>from_candid_HealthcareService_n14(_uploadFile, _downloadFile, x));
 }
 function from_candid_vec_n8(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: Array<_CommunityResource>): Array<CommunityResource> {
     return value.map((x)=>from_candid_CommunityResource_n9(_uploadFile, _downloadFile, x));

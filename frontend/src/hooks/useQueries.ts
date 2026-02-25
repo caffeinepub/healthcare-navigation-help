@@ -5,7 +5,6 @@ import type {
   InsuranceTerm,
   AssistanceProgram,
   CommunityResource,
-  Workshop,
 } from '../backend';
 
 export function useHealthcareServices() {
@@ -56,18 +55,6 @@ export function useCommunityResources() {
   });
 }
 
-export function useWorkshops() {
-  const { actor, isFetching } = useActor();
-  return useQuery<Workshop[]>({
-    queryKey: ['workshops'],
-    queryFn: async () => {
-      if (!actor) return [];
-      return actor.getWorkshops();
-    },
-    enabled: !!actor && !isFetching,
-  });
-}
-
 export function useInitializeData() {
   const { actor } = useActor();
   const queryClient = useQueryClient();
@@ -81,7 +68,6 @@ export function useInitializeData() {
       queryClient.invalidateQueries({ queryKey: ['insuranceTerms'] });
       queryClient.invalidateQueries({ queryKey: ['assistancePrograms'] });
       queryClient.invalidateQueries({ queryKey: ['communityResources'] });
-      queryClient.invalidateQueries({ queryKey: ['workshops'] });
     },
   });
 }

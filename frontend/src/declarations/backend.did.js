@@ -26,8 +26,11 @@ export const AssistanceProgram = IDL.Record({
   'eligibility' : IDL.Text,
 });
 export const CommunityResource = IDL.Record({
+  'lat' : IDL.Opt(IDL.Float64),
+  'lng' : IDL.Opt(IDL.Float64),
   'name' : IDL.Text,
   'website' : IDL.Opt(IDL.Text),
+  'zipCode' : IDL.Text,
   'resourceType' : IDL.Text,
   'address' : IDL.Text,
   'phone' : IDL.Text,
@@ -41,13 +44,6 @@ export const HealthcareService = IDL.Record({
 export const InsuranceTerm = IDL.Record({
   'term' : IDL.Text,
   'definition' : IDL.Text,
-});
-export const Workshop = IDL.Record({
-  'title' : IDL.Text,
-  'date' : IDL.Opt(IDL.Text),
-  'description' : IDL.Text,
-  'audience' : IDL.Text,
-  'location' : IDL.Opt(IDL.Text),
 });
 
 export const idlService = IDL.Service({
@@ -98,7 +94,11 @@ export const idlService = IDL.Service({
       [IDL.Vec(CommunityResource)],
       ['query'],
     ),
-  'getWorkshops' : IDL.Func([], [IDL.Vec(Workshop)], ['query']),
+  'getResourcesByZipCode' : IDL.Func(
+      [IDL.Text],
+      [IDL.Vec(CommunityResource)],
+      ['query'],
+    ),
   'initializeData' : IDL.Func([], [], []),
   'searchInsuranceTerm' : IDL.Func([IDL.Text], [InsuranceTerm], ['query']),
 });
@@ -124,8 +124,11 @@ export const idlFactory = ({ IDL }) => {
     'eligibility' : IDL.Text,
   });
   const CommunityResource = IDL.Record({
+    'lat' : IDL.Opt(IDL.Float64),
+    'lng' : IDL.Opt(IDL.Float64),
     'name' : IDL.Text,
     'website' : IDL.Opt(IDL.Text),
+    'zipCode' : IDL.Text,
     'resourceType' : IDL.Text,
     'address' : IDL.Text,
     'phone' : IDL.Text,
@@ -139,13 +142,6 @@ export const idlFactory = ({ IDL }) => {
   const InsuranceTerm = IDL.Record({
     'term' : IDL.Text,
     'definition' : IDL.Text,
-  });
-  const Workshop = IDL.Record({
-    'title' : IDL.Text,
-    'date' : IDL.Opt(IDL.Text),
-    'description' : IDL.Text,
-    'audience' : IDL.Text,
-    'location' : IDL.Opt(IDL.Text),
   });
   
   return IDL.Service({
@@ -196,7 +192,11 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Vec(CommunityResource)],
         ['query'],
       ),
-    'getWorkshops' : IDL.Func([], [IDL.Vec(Workshop)], ['query']),
+    'getResourcesByZipCode' : IDL.Func(
+        [IDL.Text],
+        [IDL.Vec(CommunityResource)],
+        ['query'],
+      ),
     'initializeData' : IDL.Func([], [], []),
     'searchInsuranceTerm' : IDL.Func([IDL.Text], [InsuranceTerm], ['query']),
   });

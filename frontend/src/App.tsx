@@ -9,7 +9,6 @@ import { FinancialAssistancePage } from './pages/FinancialAssistancePage';
 import { ResourcesPage } from './pages/ResourcesPage';
 import { NavigationToolsPage } from './pages/NavigationToolsPage';
 import { GuidedJourneyPage } from './pages/GuidedJourneyPage';
-import { EducationPage } from './pages/EducationPage';
 import { AboutPage } from './pages/AboutPage';
 
 // Root layout with persistent nav + footer
@@ -79,12 +78,6 @@ const guidedJourneyRoute = createRoute({
   component: GuidedJourneyPage,
 });
 
-const educationRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/education',
-  component: EducationPage,
-});
-
 const aboutRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/about',
@@ -101,7 +94,6 @@ const routeTree = rootRoute.addChildren([
   resourcesRoute,
   navigationToolsRoute,
   guidedJourneyRoute,
-  educationRoute,
   aboutRoute,
 ]);
 

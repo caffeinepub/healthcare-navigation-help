@@ -1,241 +1,83 @@
 {
   "kind": "build_request",
-  "title": "Healthcare Navigation Help – Community Support Web App (Initial Build)",
+  "title": "Real location-based resource lookup for any city, zip code, or address",
   "projectName": "Healthcare Navigation Help",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Create a Hero/Home section that introduces Healthcare Navigation Help, states the mission ('No one should miss medical care because the system is confusing, overwhelming, or hard to afford'), and provides clear calls-to-action to explore tools and resources.",
+      "id": "REQ-22",
+      "text": "In ResourcesPage.tsx, when the user submits a location (zip code, city name like 'Miami', or any address) via the manual text input in the LocationBar, use the browser's native fetch to call a free geocoding API (e.g., Nominatim/OpenStreetMap at https://nominatim.openstreetmap.org/search) to resolve the entered text into latitude/longitude coordinates. Store those resolved coordinates as the active location context so the existing proximity-sort logic can rank resources by distance from those coordinates.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-4"
         ],
         "quotes": [
-          "Our goal is simple: no one should miss medical care because the system is confusing, overwhelming, or hard to afford."
+          "Make it so it actually shows nearby places when u put in zip code/address example if they put Miami make it so that it shows up places in Miami or near where they live"
         ]
       },
       "acceptanceCriteria": [
-        "Hero section is visible on the landing page with mission statement prominently displayed.",
-        "At least two call-to-action buttons link to key sections (e.g., Find Care, Explore Tools).",
-        "Section is responsive on mobile and desktop."
+        "Typing 'Miami' (or any city/zip/address) into the location input and submitting resolves to lat/lng coordinates via geocoding.",
+        "The active location display updates to reflect the resolved location name (e.g., 'Showing resources near: Miami, FL').",
+        "Resources are sorted by proximity to the resolved coordinates, not by zip-code string matching alone.",
+        "If geocoding fails or returns no results, display a user-friendly message such as 'Could not find that location. Please try a different city, zip code, or address.'",
+        "Geolocation (Use My Location) behavior is unchanged and continues to work as before."
       ]
     },
     {
-      "id": "REQ-2",
-      "text": "Build a 'Find Affordable Care' resource finder that presents categorized healthcare service options (urgent care, routine visits, specialized treatment, community health centers) with descriptions helping users understand where to go for different health needs.",
+      "id": "REQ-23",
+      "text": "Extend the community resource data in both the backend (backend/main.mo) and the static fallback data in ResourcesPage.tsx to include latitude and longitude fields for each resource entry. Populate realistic coordinates for the existing Leominster-area resources (e.g., Leominster, MA is approximately lat 42.5251, lng -71.7598). Update the CommunityResource type in Motoko to add optional lat and lng Float fields, and update the initialization data accordingly. On the frontend, use these lat/lng fields (when available) in the proximity-sort calculation instead of relying solely on zip code comparison.",
       "target": "both",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-4"
         ],
         "quotes": [
-          "Find low-cost or affordable healthcare services",
-          "Understanding where to go for different health needs, including urgent care, routine visits, and specialized treatment."
+          "Make it so it actually shows nearby places when u put in zip code/address"
         ]
       },
       "acceptanceCriteria": [
-        "Users can browse care categories (urgent, routine, specialist, community health).",
-        "Each category includes a clear description and guidance on when to use it.",
-        "Resource data is stored in the backend and retrievable by the frontend.",
-        "Leominster, MA and surrounding Massachusetts communities are referenced as the primary service area."
+        "CommunityResource type in backend/main.mo includes optional lat and lng Float fields.",
+        "All existing sample resource entries in backend initialization data have lat/lng values populated.",
+        "The static fallback resource array in ResourcesPage.tsx includes lat/lng for each entry.",
+        "The proximity sort function in locationUtils.ts (or ResourcesPage.tsx) uses resource lat/lng coordinates when available.",
+        "Resources without lat/lng gracefully fall back to zip-code-based proximity or appear at the end of sorted results."
       ]
     },
     {
-      "id": "REQ-3",
-      "text": "Build an Insurance Terms & Coverage Explainer section with a searchable glossary of common insurance terms (e.g., deductible, copay, premium, network, EOB) and short plain-language definitions to help first-time insurance users understand their coverage.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "Understand insurance terms and coverage",
-          "First-time insurance users"
-        ]
-      },
-      "acceptanceCriteria": [
-        "At least 15 common insurance terms are stored in the backend and displayed on the frontend.",
-        "Users can search or filter terms by keyword.",
-        "Each term has a plain-language definition legible to a general audience."
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Create an interactive Appointment Preparation Checklist tool that guides users through what questions to ask, what documents to bring, and how to advocate for their needs before a doctor or hospital visit. Users can check off items and see their progress.",
+      "id": "REQ-24",
+      "text": "Update locationUtils.ts to replace or augment the zip-code numeric comparison approach with a haversine distance calculation that uses lat/lng coordinates. When the active location has coordinates (from geolocation or resolved geocoding), sort all resources with known coordinates by their haversine distance from the active location, ascending. Resources with no coordinates fall to the bottom. Display the computed distance (e.g., '~3 miles away') next to each resource entry in the ResourceDirectoryItem component when a location is active.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-4"
         ],
         "quotes": [
-          "Prepare for doctor or hospital visits",
-          "Knowing what questions to ask, what documents to bring, and how to advocate for personal needs."
+          "shows up places in Miami or near where they live"
         ]
       },
       "acceptanceCriteria": [
-        "Checklist displays at least 10 preparation items grouped by category (documents, questions, personal advocacy).",
-        "Users can check/uncheck items with visual progress indicator.",
-        "Checklist is printable or copyable for offline use."
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "text": "Build a Medical Bill Guide section that explains how to read a medical bill, how to identify common billing errors, and what payment plan or financial assistance options are typically available. Present content in a step-by-step format.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "Understand medical bills and payment options",
-          "Understanding charges, checking for errors, and exploring payment plans or assistance."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Section covers at least 4 topics: reading a bill, spotting errors, requesting itemization, and payment plans.",
-        "Content is presented in numbered or accordion step-by-step format.",
-        "Page includes a tip or callout highlighting patients' right to request an itemized bill."
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "text": "Create a Financial Assistance Programs finder that lists public health coverage programs and hospital financial aid options (e.g., MassHealth, Health Safety Net, hospital charity care) with brief descriptions and guidance on how to apply.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "Learn about financial assistance programs",
-          "Learning how to apply for public health coverage and hospital financial aid."
-        ]
-      },
-      "acceptanceCriteria": [
-        "At least 5 financial assistance programs are stored in the backend and displayed on the frontend.",
-        "Each program listing includes name, eligibility summary, and how-to-apply guidance.",
-        "Programs are filterable or tagged by type (public coverage, hospital aid, etc.)."
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "text": "Build a Community Resource Map section that lists local healthcare resources in Leominster and surrounding Massachusetts communities, including community health centers, free clinics, and support services, displayed as a structured directory with name, type, and contact/access information.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "Community resource mapping",
-          "We support individuals and families in Leominster and surrounding communities across Massachusetts"
-        ]
-      },
-      "acceptanceCriteria": [
-        "At least 6 local resources are stored in the backend and rendered in a directory/list view.",
-        "Each resource entry includes name, service type, location/service area, and contact information.",
-        "Resources are filterable by service type (e.g., primary care, mental health, dental, financial aid)."
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "text": "Create a Step-by-Step Navigation Tools section featuring guided healthcare journey flows (e.g., 'I need care but have no insurance', 'I received a confusing bill', 'I need to find a specialist'). Each journey presents a linear sequence of steps with explanations and recommended actions.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "Step-by-step navigation tools and checklists",
-          "We break down complex processes into simple steps"
-        ]
-      },
-      "acceptanceCriteria": [
-        "At least 3 distinct guided journey flows are available.",
-        "Each journey has 4–7 steps with a title, description, and optional action link.",
-        "Users can navigate forward/backward through steps with visual progress tracking.",
-        "Each journey is accessible from the main navigation or home page."
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "text": "Build an Educational Resources & Workshops section that showcases available educational guides, upcoming or recorded learning sessions, and advocacy skill-building content. Include a listing for workshops with title, description, and audience.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "Workshops and learning sessions",
-          "Educational guides and easy-to-read resources",
-          "Advocacy skill building"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Section displays educational resource cards with title, description, and topic category.",
-        "Workshop listings are stored in the backend and rendered on the frontend.",
-        "At least 4 resource/workshop entries are seeded in the backend.",
-        "Content is organized by category (guides, workshops, advocacy skills)."
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "text": "Add a persistent navigation bar and an About/Vision page describing the program mission, who it serves (families, youth, first-time insurance users, people with confusing bills), the service area (Leominster, MA and surrounding Massachusetts communities), and the long-term vision of expanding impact regionally and nationally.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "We believe healthcare access should be fair, understandable, and achievable for everyone.",
-          "We support individuals and families in Leominster and surrounding communities across Massachusetts, with plans to expand our model to help communities everywhere."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Navigation bar links to all major sections: Home, Find Care, Insurance Guide, Appointment Prep, Medical Bills, Financial Assistance, Resources, Navigation Tools, About.",
-        "About page includes mission statement, who we serve section, service area, and vision statement.",
-        "Navigation is responsive with a mobile hamburger menu."
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "text": "Apply a warm, trustworthy, and approachable visual theme throughout the app. Use a calming teal-green and warm white color palette with clear readable typography. The design should feel welcoming, not clinical — conveying community support rather than a hospital or insurance company. Enforce this style consistently across all pages and components.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "We are committed to making healthcare systems more transparent, more understandable, and more accessible — one person, one family, and one community at a time"
-        ]
-      },
-      "acceptanceCriteria": [
-        "A consistent color palette (teal-green primary, warm white background, soft accent tones) is applied site-wide.",
-        "Typography is clean, readable, and accessible (minimum 16px body text).",
-        "No cold clinical blues or sterile whites — the palette reads as community-oriented and welcoming.",
-        "Visual theme is consistent across all pages, cards, navigation, and buttons."
+        "locationUtils.ts exports a haversine distance function that accepts two lat/lng pairs and returns distance in miles.",
+        "When a location is active, resources are sorted by ascending distance from that location.",
+        "Each resource card/row displays an approximate distance label (e.g., '~5 miles away') when a location is active.",
+        "Resources without lat/lng data appear below those with coordinates and show no distance label.",
+        "Distance labels are hidden when no location is active."
       ]
     }
   ],
   "constraints": [
-    "All user-facing text must be in English.",
-    "Service area references must reflect Leominster, MA and surrounding Massachusetts communities.",
-    "Do not integrate real-time external APIs, maps, or third-party healthcare databases — use static/seeded data stored in the backend."
+    "Do not use paid geocoding APIs. Use Nominatim (OpenStreetMap) or another free, no-key-required geocoding endpoint.",
+    "Do not modify files listed in frontend.immutablePaths.",
+    "Keep all Motoko logic in backend/main.mo (single-actor architecture)."
   ],
   "nonGoals": [
-    "Actual appointment booking or scheduling with healthcare providers.",
-    "Real-time insurance verification or eligibility checking.",
-    "User authentication or personal health record storage.",
-    "Payment processing for medical bills.",
-    "Integration with external map APIs or GPS location services.",
-    "Live chat or real-time communication with navigators."
+    "Building a custom map visualization or embedding an interactive map.",
+    "Storing user location data in the backend.",
+    "Supporting real-time resource database lookups from external healthcare directories.",
+    "Changing the overall page layout or visual theme."
   ],
   "imageRequirements": {
-    "required": [
-      "Warm and welcoming hero illustration showing a diverse family or community group with a subtle healthcare/navigation theme — soft teal and green tones, friendly and approachable, no clinical imagery (hero-banner.dim_1440x600.png)",
-      "Simple flat icon of a compass or map pin blended with a green cross or heart symbol, representing healthcare navigation (logo-icon.dim_128x128.png)",
-      "Soft abstract background pattern with gentle teal wave or leaf motifs for section backgrounds (section-bg-pattern.dim_1440x400.png)"
-    ],
+    "required": [],
     "edits": []
   }
 }

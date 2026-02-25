@@ -155,8 +155,8 @@ export function HomePage() {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="bg-white/10 border-white/30 text-white hover:bg-white/20 font-bold">
-                <Link to="/education">
-                  Browse Workshops & Guides
+                <Link to="/resources">
+                  Browse Community Resources
                 </Link>
               </Button>
             </div>

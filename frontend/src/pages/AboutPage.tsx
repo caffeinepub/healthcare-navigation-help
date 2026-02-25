@@ -14,7 +14,7 @@ const whoWeServe = [
 
 const whatWeDo = [
   { icon: '📚', title: 'Educational Guides', description: 'Easy-to-read resources explaining healthcare systems, insurance, and billing in plain language.' },
-  { icon: '🎯', title: 'Workshops & Learning Sessions', description: 'Community workshops covering insurance basics, bill navigation, and advocacy skills.' },
+  { icon: '🎯', title: 'Learning Sessions', description: 'Community sessions covering insurance basics, bill navigation, and advocacy skills.' },
   { icon: '🧭', title: 'Step-by-Step Navigation Tools', description: 'Guided journeys and checklists for common healthcare situations.' },
   { icon: '🗺️', title: 'Community Resource Mapping', description: 'A directory of local healthcare resources in Leominster and surrounding communities.' },
   { icon: '💪', title: 'Advocacy Skill Building', description: 'Tools and practice to help you communicate confidently with healthcare providers.' },
@@ -171,8 +171,8 @@ export function AboutPage() {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="font-bold">
-                <Link to="/education">
-                  Browse Workshops &amp; Guides
+                <Link to="/resources">
+                  Browse Community Resources
                 </Link>
               </Button>
             </div>

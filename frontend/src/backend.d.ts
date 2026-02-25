@@ -7,16 +7,12 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
-export interface Workshop {
-    title: string;
-    date?: string;
-    description: string;
-    audience: string;
-    location?: string;
-}
 export interface CommunityResource {
+    lat?: number;
+    lng?: number;
     name: string;
     website?: string;
+    zipCode: string;
     resourceType: string;
     address: string;
     phone: string;
@@ -43,7 +39,7 @@ export interface backendInterface {
     getHealthcareServices(): Promise<Array<HealthcareService>>;
     getInsuranceTerms(): Promise<Array<InsuranceTerm>>;
     getResourcesByType(resourceType: string): Promise<Array<CommunityResource>>;
-    getWorkshops(): Promise<Array<Workshop>>;
+    getResourcesByZipCode(zipCode: string): Promise<Array<CommunityResource>>;
     initializeData(): Promise<void>;
     searchInsuranceTerm(term: string): Promise<InsuranceTerm>;
 }

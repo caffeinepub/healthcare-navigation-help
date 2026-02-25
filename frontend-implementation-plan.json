@@ -1,315 +1,74 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Healthcare Navigation Help – Community Support Web App (Initial Build)",
+  "title": "Real location-based resource lookup for any city, zip code, or address",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Create a Hero/Home section introducing Healthcare Navigation Help with mission statement and calls-to-action",
+      "id": "REQ-22",
+      "summary": "Integrate free geocoding API (Nominatim/OpenStreetMap) in ResourcesPage.tsx to resolve manual location input (zip code, city name, or address) into latitude/longitude coordinates, then use those coordinates for proximity-based resource sorting",
       "acceptanceCriteria": [
-        "Hero section is visible on the landing page with mission statement prominently displayed.",
-        "At least two call-to-action buttons link to key sections (e.g., Find Care, Explore Tools).",
-        "Section is responsive on mobile and desktop."
+        "Typing 'Miami' (or any city/zip/address) into the location input and submitting resolves to lat/lng coordinates via geocoding.",
+        "The active location display updates to reflect the resolved location name (e.g., 'Showing resources near: Miami, FL').",
+        "Resources are sorted by proximity to the resolved coordinates, not by zip-code string matching alone.",
+        "If geocoding fails or returns no results, display a user-friendly message such as 'Could not find that location. Please try a different city, zip code, or address.'",
+        "Geolocation (Use My Location) behavior is unchanged and continues to work as before."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/HeroSection.tsx",
-          "operation": "create",
-          "description": "Create a Hero section component that displays the mission statement 'No one should miss medical care because the system is confusing, overwhelming, or hard to afford' with prominent typography, the generated hero-banner.dim_1440x600.png image from frontend/public/assets/generated/hero-banner.dim_1440x600.png, and at least two call-to-action buttons linking to Find Care and Navigation Tools sections. Use warm teal-green styling consistent with the community support theme."
-        },
-        {
-          "path": "frontend/src/pages/HomePage.tsx",
-          "operation": "create",
-          "description": "Create the main home page that renders the HeroSection component along with quick links or overview cards for key sections (Find Care, Insurance Guide, Appointment Prep). This page serves as the landing page for the application."
-        },
-        {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/components/LocationBar.tsx",
           "operation": "modify",
-          "description": "Wire HomePage as the default route ('/') in the router configuration and ensure navigation structure supports all required sections."
+          "description": "Add geocoding logic using the browser's native fetch to call the Nominatim API (https://nominatim.openstreetmap.org/search) when the user submits manual location input. Parse the API response to extract latitude, longitude, and display name. Update the active location state to include resolved coordinates and location name. Add error handling to display a user-friendly message when geocoding fails or returns no results. Preserve existing geolocation (Use My Location) behavior without modification."
+        },
+        {
+          "path": "frontend/src/pages/ResourcesPage.tsx",
+          "operation": "modify",
+          "description": "Receive resolved coordinates from LocationBar and store them as the active location context. Update the active location display label to show the resolved location name (e.g., 'Showing resources near: Miami, FL'). Pass the active coordinates to the proximity sorting logic in locationUtils.ts instead of relying solely on zip-code string matching. Ensure the existing geolocation flow continues to work unchanged."
         }
       ]
     },
     {
-      "id": "REQ-2",
-      "summary": "Build a 'Find Affordable Care' resource finder presenting categorized healthcare service options with descriptions",
+      "id": "REQ-23",
+      "summary": "Extend the static fallback resource data in ResourcesPage.tsx to include latitude and longitude fields for each resource entry, and populate realistic coordinates for existing Leominster-area resources",
       "acceptanceCriteria": [
-        "Users can browse care categories (urgent, routine, specialist, community health).",
-        "Each category includes a clear description and guidance on when to use it.",
-        "Resource data is stored in the backend and retrievable by the frontend.",
-        "Leominster, MA and surrounding Massachusetts communities are referenced as the primary service area."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/FindCarePage.tsx",
-          "operation": "create",
-          "description": "Create the Find Affordable Care page that fetches healthcare services from the backend using getHealthcareServices() and displays them grouped by category (urgent care, routine visits, specialized treatment, community health centers). Each category section should show the service name, description, and contact information with clear guidance on when to use each type. Include a reference to Leominster, MA and surrounding Massachusetts communities as the service area."
-        },
-        {
-          "path": "frontend/src/components/ServiceCategoryCard.tsx",
-          "operation": "create",
-          "description": "Create a reusable card component for displaying healthcare service categories with name, description, contact information, and visual styling using the warm teal-green theme."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add a route for FindCarePage at '/find-care' in the router configuration."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Build an Insurance Terms & Coverage Explainer section with searchable glossary of common insurance terms",
-      "acceptanceCriteria": [
-        "At least 15 common insurance terms are stored in the backend and displayed on the frontend.",
-        "Users can search or filter terms by keyword.",
-        "Each term has a plain-language definition legible to a general audience."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/InsuranceGuidePage.tsx",
-          "operation": "create",
-          "description": "Create the Insurance Terms & Coverage Explainer page that fetches insurance terms from the backend using getInsuranceTerms() and displays them as a searchable glossary. Implement a search input that filters terms by keyword in real-time. Display each term with its plain-language definition in an accessible, readable format. Include at least 15 terms covering deductible, copay, premium, network, EOB, and other common insurance terminology."
-        },
-        {
-          "path": "frontend/src/components/InsuranceTermCard.tsx",
-          "operation": "create",
-          "description": "Create a card component for displaying individual insurance terms with the term name emphasized and definition presented in clear, plain language with good readability."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add a route for InsuranceGuidePage at '/insurance-guide' in the router configuration."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Create an interactive Appointment Preparation Checklist tool guiding users through preparation steps with progress tracking",
-      "acceptanceCriteria": [
-        "Checklist displays at least 10 preparation items grouped by category (documents, questions, personal advocacy).",
-        "Users can check/uncheck items with visual progress indicator.",
-        "Checklist is printable or copyable for offline use."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/AppointmentPrepPage.tsx",
-          "operation": "create",
-          "description": "Create the Appointment Preparation Checklist page with at least 10 checklist items organized into categories: documents to bring, questions to ask, and personal advocacy tips. Implement interactive checkboxes with local state management, display a visual progress indicator showing percentage completion, and include a print button that triggers browser print dialog for offline use."
-        },
-        {
-          "path": "frontend/src/components/ChecklistSection.tsx",
-          "operation": "create",
-          "description": "Create a reusable checklist section component that groups related checklist items by category with a category header and individual checkbox items."
-        },
-        {
-          "path": "frontend/src/components/ProgressIndicator.tsx",
-          "operation": "create",
-          "description": "Create a progress indicator component that displays completion percentage with a visual progress bar using the warm teal-green color scheme."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add a route for AppointmentPrepPage at '/appointment-prep' in the router configuration."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Build a Medical Bill Guide section explaining how to read bills, identify errors, and explore payment options in step-by-step format",
-      "acceptanceCriteria": [
-        "Section covers at least 4 topics: reading a bill, spotting errors, requesting itemization, and payment plans.",
-        "Content is presented in numbered or accordion step-by-step format.",
-        "Page includes a tip or callout highlighting patients' right to request an itemized bill."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/MedicalBillGuidePage.tsx",
-          "operation": "create",
-          "description": "Create the Medical Bill Guide page presenting at least 4 topics in a numbered step-by-step or accordion format: how to read a medical bill, how to identify common billing errors, how to request an itemized bill, and exploring payment plans or financial assistance options. Include a prominent callout box highlighting patients' right to request an itemized bill. Use clear, accessible language suitable for first-time bill readers."
-        },
-        {
-          "path": "frontend/src/components/GuideStep.tsx",
-          "operation": "create",
-          "description": "Create a step component for displaying individual guide steps with step number, title, and detailed content in an accessible format."
-        },
-        {
-          "path": "frontend/src/components/CalloutBox.tsx",
-          "operation": "create",
-          "description": "Create a callout box component for highlighting important tips or patient rights with distinct styling using warm accent colors."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add a route for MedicalBillGuidePage at '/medical-bills' in the router configuration."
-        }
-      ]
-    },
-    {
-      "id": "REQ-6",
-      "summary": "Create a Financial Assistance Programs finder listing public health coverage programs and hospital financial aid options",
-      "acceptanceCriteria": [
-        "At least 5 financial assistance programs are stored in the backend and displayed on the frontend.",
-        "Each program listing includes name, eligibility summary, and how-to-apply guidance.",
-        "Programs are filterable or tagged by type (public coverage, hospital aid, etc.)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/FinancialAssistancePage.tsx",
-          "operation": "create",
-          "description": "Create the Financial Assistance Programs finder page that fetches assistance programs from the backend using getAssistancePrograms() and displays them as filterable cards. Each program card should show the name, eligibility summary, description, and contact information with how-to-apply guidance. Implement filter buttons or tags to filter by program type (e.g., public coverage like MassHealth, hospital charity care, Health Safety Net)."
-        },
-        {
-          "path": "frontend/src/components/ProgramCard.tsx",
-          "operation": "create",
-          "description": "Create a program card component for displaying individual financial assistance programs with name, eligibility criteria, description, and contact/application information in a clear, approachable layout."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add a route for FinancialAssistancePage at '/financial-assistance' in the router configuration."
-        }
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "summary": "Build a Community Resource Map section listing local healthcare resources as a structured directory with filtering",
-      "acceptanceCriteria": [
-        "At least 6 local resources are stored in the backend and rendered in a directory/list view.",
-        "Each resource entry includes name, service type, location/service area, and contact information.",
-        "Resources are filterable by service type (e.g., primary care, mental health, dental, financial aid)."
+        "CommunityResource type in backend/main.mo includes optional lat and lng Float fields.",
+        "All existing sample resource entries in backend initialization data have lat/lng values populated.",
+        "The static fallback resource array in ResourcesPage.tsx includes lat/lng for each entry.",
+        "The proximity sort function in locationUtils.ts (or ResourcesPage.tsx) uses resource lat/lng coordinates when available.",
+        "Resources without lat/lng gracefully fall back to zip-code-based proximity or appear at the end of sorted results."
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/ResourcesPage.tsx",
-          "operation": "create",
-          "description": "Create the Community Resource Map page that fetches community resources from the backend using getCommunityResources() and displays them as a directory list. Each resource entry shows name, service type, address/location, phone number, and website if available. Implement service type filters allowing users to filter by primary care, mental health, dental, financial aid, and other categories. Reference Leominster, MA and surrounding Massachusetts communities as the service area."
+          "operation": "modify",
+          "description": "Add optional lat and lng number fields to the CommunityResource type definition in the static fallback data array. Populate realistic latitude and longitude coordinates for all existing Leominster-area resource entries (Leominster, MA is approximately lat 42.5251, lng -71.7598). Ensure the fallback data structure matches the updated backend CommunityResource type from backend.d.ts."
+        }
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "summary": "Implement haversine distance calculation in locationUtils.ts to sort resources by actual geographic distance from active location coordinates, and display computed distance next to each resource",
+      "acceptanceCriteria": [
+        "locationUtils.ts exports a haversine distance function that accepts two lat/lng pairs and returns distance in miles.",
+        "When a location is active, resources are sorted by ascending distance from that location.",
+        "Each resource card/row displays an approximate distance label (e.g., '~5 miles away') when a location is active.",
+        "Resources without lat/lng data appear below those with coordinates and show no distance label.",
+        "Distance labels are hidden when no location is active."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/utils/locationUtils.ts",
+          "operation": "modify",
+          "description": "Add a haversine distance calculation function that accepts two lat/lng coordinate pairs and returns the distance in miles. Replace or augment the existing zip-code numeric comparison approach with coordinate-based distance sorting. When an active location has coordinates (from geolocation or geocoding), sort all resources with known lat/lng by ascending haversine distance. Resources without coordinates should fall to the bottom of the sorted list. Export a function that calculates and returns the distance for display purposes."
         },
         {
           "path": "frontend/src/components/ResourceDirectoryItem.tsx",
-          "operation": "create",
-          "description": "Create a directory item component for displaying individual community resources with name, type badge, location, and contact details in a clean list format."
-        },
-        {
-          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add a route for ResourcesPage at '/resources' in the router configuration."
-        }
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "summary": "Create a Step-by-Step Navigation Tools section featuring guided healthcare journey flows with linear sequences",
-      "acceptanceCriteria": [
-        "At least 3 distinct guided journey flows are available.",
-        "Each journey has 4–7 steps with a title, description, and optional action link.",
-        "Users can navigate forward/backward through steps with visual progress tracking.",
-        "Each journey is accessible from the main navigation or home page."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/NavigationToolsPage.tsx",
-          "operation": "create",
-          "description": "Create the Step-by-Step Navigation Tools landing page that presents at least 3 guided journey options: 'I need care but have no insurance', 'I received a confusing bill', and 'I need to find a specialist'. Each journey card links to its dedicated journey flow page."
+          "description": "Accept an optional distance prop (number representing miles) and display it as a label (e.g., '~3 miles away') next to the resource name or address when provided. Hide the distance label when the distance prop is not provided or when no location is active. Ensure the distance display integrates cleanly with the existing resource card layout and does not disrupt the type badge, address, phone, or website link elements."
         },
         {
-          "path": "frontend/src/pages/GuidedJourneyPage.tsx",
-          "operation": "create",
-          "description": "Create a guided journey page component that displays a linear sequence of 4-7 steps for a healthcare journey. Implement forward/backward navigation buttons, visual progress tracking showing current step and total steps, and display each step with title, detailed description, and optional action links. Use URL parameters or state to distinguish between different journey types."
-        },
-        {
-          "path": "frontend/src/components/JourneyCard.tsx",
-          "operation": "create",
-          "description": "Create a journey card component for displaying journey options on the landing page with journey title, brief description, and a start button."
-        },
-        {
-          "path": "frontend/src/components/StepNavigator.tsx",
-          "operation": "create",
-          "description": "Create a step navigator component with previous/next buttons and step progress indicator for navigating through journey steps."
-        },
-        {
-          "path": "frontend/src/data/journeys.ts",
-          "operation": "create",
-          "description": "Create a TypeScript data file containing the journey definitions with at least 3 journeys, each having 4-7 steps with title, description, and optional action links."
-        },
-        {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/pages/ResourcesPage.tsx",
           "operation": "modify",
-          "description": "Add routes for NavigationToolsPage at '/navigation-tools' and GuidedJourneyPage at '/journey/:journeyId' in the router configuration."
-        }
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "summary": "Build an Educational Resources & Workshops section showcasing guides, learning sessions, and advocacy content",
-      "acceptanceCriteria": [
-        "Section displays educational resource cards with title, description, and topic category.",
-        "Workshop listings are stored in the backend and rendered on the frontend.",
-        "At least 4 resource/workshop entries are seeded in the backend.",
-        "Content is organized by category (guides, workshops, advocacy skills)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/EducationPage.tsx",
-          "operation": "create",
-          "description": "Create the Educational Resources & Workshops page that fetches workshops from the backend using getWorkshops() and displays them organized by category: educational guides, workshops/learning sessions, and advocacy skill-building content. Each workshop card shows title, description, audience, date if available, and location if available. Display at least 4 entries organized in a categorized layout."
-        },
-        {
-          "path": "frontend/src/components/WorkshopCard.tsx",
-          "operation": "create",
-          "description": "Create a workshop card component for displaying individual workshops or educational resources with title, description, category badge, audience, and date/location information."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add a route for EducationPage at '/education' in the router configuration."
-        }
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "summary": "Add persistent navigation bar and About/Vision page describing program mission, service area, and expansion vision",
-      "acceptanceCriteria": [
-        "Navigation bar links to all major sections: Home, Find Care, Insurance Guide, Appointment Prep, Medical Bills, Financial Assistance, Resources, Navigation Tools, About.",
-        "About page includes mission statement, who we serve section, service area, and vision statement.",
-        "Navigation is responsive with a mobile hamburger menu."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/Navigation.tsx",
-          "operation": "create",
-          "description": "Create a persistent navigation bar component with the logo-icon.dim_128x128.png logo from frontend/public/assets/generated/logo-icon.dim_128x128.png and links to all major sections: Home (/), Find Care (/find-care), Insurance Guide (/insurance-guide), Appointment Prep (/appointment-prep), Medical Bills (/medical-bills), Financial Assistance (/financial-assistance), Resources (/resources), Navigation Tools (/navigation-tools), and About (/about). Implement responsive design with a hamburger menu for mobile viewports using the warm teal-green styling."
-        },
-        {
-          "path": "frontend/src/pages/AboutPage.tsx",
-          "operation": "create",
-          "description": "Create the About/Vision page that presents: mission statement ('We believe healthcare access should be fair, understandable, and achievable for everyone'), who we serve section (families, youth, first-time insurance users, people with confusing bills), service area description (Leominster, MA and surrounding Massachusetts communities), and long-term vision statement about expanding impact regionally and nationally. Use welcoming, community-focused language."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Add the Navigation component as a persistent element above the router outlet, and add a route for AboutPage at '/about' in the router configuration."
-        }
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "summary": "Apply warm, trustworthy, and approachable visual theme with calming teal-green and warm white color palette consistently across all pages",
-      "acceptanceCriteria": [
-        "A consistent color palette (teal-green primary, warm white background, soft accent tones) is applied site-wide.",
-        "Typography is clean, readable, and accessible (minimum 16px body text).",
-        "No cold clinical blues or sterile whites — the palette reads as community-oriented and welcoming.",
-        "Visual theme is consistent across all pages, cards, navigation, and buttons."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Update global styles to implement the warm, trustworthy, and approachable theme. Define CSS custom properties for the color palette: calming teal-green primary colors (#2D8B8B, #3FA3A3), warm white/cream background (#FAF9F6, #FFFFFF), soft accent tones (warm amber #F4A460, soft coral #FFA07A for highlights). Set base typography to minimum 16px with clean, readable font families. Ensure no cold clinical blues or sterile whites. Apply the section-bg-pattern.dim_1440x400.png from frontend/public/assets/generated/section-bg-pattern.dim_1440x400.png as a subtle background pattern for sections."
-        },
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Extend Tailwind configuration to include custom theme colors matching the warm teal-green palette. Define primary colors (teal-green variants), background colors (warm white/cream), and accent colors (warm amber, soft coral). Configure typography settings for minimum 16px base size and ensure spacing and border-radius values support a welcoming, non-clinical design aesthetic."
+          "description": "When rendering filtered resources, calculate the distance for each resource using the haversine function from locationUtils.ts if both the active location coordinates and resource lat/lng are available. Pass the computed distance to each ResourceDirectoryItem component. Ensure resources without lat/lng appear at the bottom of the list and receive no distance prop. Only compute and display distances when a location is active (either from geolocation or geocoding)."
         }
       ]
     }

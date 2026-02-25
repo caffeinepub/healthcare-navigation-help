@@ -1,15 +1,16 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 17,
   "summary": "Healthcare Navigation Help is a community support web app/program for individuals and families in Leominster, MA and surrounding communities. It helps users find affordable care, understand insurance, prepare for appointments, manage medical bills, access financial assistance programs, and build healthcare advocacy skills. The vision is to expand from local to national/global impact.",
   "architectural_notes": [
     "Target audience: individuals and families in Leominster, MA and surrounding communities, including first-time insurance users, youth, and those facing medical bills",
     "Program focuses on real-life navigation skills and actionable tools, not just informational content",
-    "Vision includes scalability from local/regional to national and global reach"
+    "Vision includes scalability from local/regional to national and global reach",
+    "Community resource finder should support geolocation (with user permission) and manual zip code/address input to find nearby resources, replacing the hardcoded Leominster, MA location",
+    "Location-based resource search should return real nearby places relevant to the user's entered location (city, zip, or address), not just filter hardcoded local data"
   ],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Warm and welcoming hero illustration showing a diverse family or community group with a subtle healthcare/navigation theme — soft teal and green tones, friendly and approachable, no clinical imagery (hero-banner.dim_1440x600.png)\n- Simple flat icon of a compass or map pin blended with a green cross or heart symbol, representing healthcare navigation (logo-icon.dim_128x128.png)\n- Soft abstract background pattern with gentle teal wave or leaf motifs for section backgrounds (section-bg-pattern.dim_1440x400.png)",
   "existing_features": [
     {
       "id": "feature-create-a-hero-home-section-that-introduces-healthcare-navigation-help-states-the-mission-no-one-should-miss-medical-care-because-the-system-is-confusing-overwhelming-or-hard-to-afford-and-provides-clear-calls-to-action-to-explore-tools-and-resources",
@@ -98,6 +99,70 @@
         "REQ-11"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-integrate-internet-identity-login-into-the-app-add-a-login-logout-button-in-the-navigation-bar-that-triggers-the-internet-identity-authentication-flow-display-the-user-s-principal-or-a-signed-in-indicator-when-authenticated-use-the-existing-useinternetidentity-hook-and-useactor-hook-already-present-in-the-codebase",
+      "title": "Integrate Internet Identity login into the app. Add a login/logout button in the Navigation bar that triggers the Internet Identity authentication flow. Display the user's principal or a 'Signed In' indicator when authenticated. Use the existing useInternetIdentity hook and useActor hook already present in the codebase.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-all-workshop-related-content-from-the-app-this-includes-removing-the-educationpage-workshops-listing-section-workshop-cards-rendered-via-workshopcard-removing-the-workshopcard-component-from-active-use-removing-the-education-workshops-route-and-nav-link-from-app-tsx-and-navigation-tsx-and-removing-workshop-related-backend-query-calls-from-usequeries-ts-educational-guides-and-advocacy-content-not-tied-to-workshops-may-remain-if-they-exist-separately",
+      "title": "Remove all workshop-related content from the app. This includes: removing the EducationPage workshops listing section (workshop cards rendered via WorkshopCard), removing the WorkshopCard component from active use, removing the Education/Workshops route and nav link from App.tsx and Navigation.tsx, and removing workshop-related backend query calls from useQueries.ts. Educational guides and advocacy content not tied to workshops may remain if they exist separately.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-static-html-file-e-g-verification-html-or-a-custom-named-file-to-the-frontend-public-directory-so-it-is-served-as-a-standalone-page-at-a-direct-url-path-the-file-should-be-a-minimal-valid-html-document-if-the-user-has-a-specific-filename-or-content-in-mind-they-should-provide-it-otherwise-create-a-placeholder-named-site-verification-html-with-a-basic-html-structure-and-a-comment-indicating-it-can-be-customized",
+      "title": "Add a static HTML file (e.g., verification.html or a custom named file) to the frontend public directory so it is served as a standalone page at a direct URL path. The file should be a minimal, valid HTML document. If the user has a specific filename or content in mind, they should provide it; otherwise, create a placeholder named 'site-verification.html' with a basic HTML structure and a comment indicating it can be customized.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-community-resources-page-resourcespage-tsx-to-replace-the-hardcoded-leominster-ma-location-assumption-with-a-location-aware-finder-add-a-location-bar-at-the-top-of-the-page-with-two-options-1-a-use-my-location-button-that-requests-the-browser-s-geolocation-api-with-permission-to-detect-the-user-s-current-coordinates-and-2-a-text-input-field-where-the-user-can-manually-type-a-zip-code-or-street-address-when-a-location-is-provided-either-via-geolocation-or-manual-entry-display-it-as-the-active-search-context-e-g-showing-resources-near-01453-or-showing-resources-near-your-current-location-if-no-location-has-been-provided-yet-show-a-prompt-encouraging-the-user-to-enter-their-location-the-location-bar-should-be-styled-consistently-with-the-existing-warm-teal-green-theme",
+      "title": "Update the Community Resources page (ResourcesPage.tsx) to replace the hardcoded Leominster, MA location assumption with a location-aware finder. Add a location bar at the top of the page with two options: (1) a 'Use My Location' button that requests the browser's Geolocation API (with permission) to detect the user's current coordinates, and (2) a text input field where the user can manually type a zip code or street address. When a location is provided (either via geolocation or manual entry), display it as the active search context (e.g., 'Showing resources near: 01453' or 'Showing resources near your current location'). If no location has been provided yet, show a prompt encouraging the user to enter their location. The location bar should be styled consistently with the existing warm teal-green theme.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-community-resources-page-once-a-location-is-active-either-from-geolocation-coordinates-or-a-manually-entered-zip-code-address-filter-or-sort-the-displayed-resource-directory-to-prioritize-entries-closest-to-the-user-s-location-for-zip-code-input-match-resources-whose-zip-code-matches-or-is-geographically-nearby-for-geolocation-coordinates-sort-resources-by-proximity-display-a-note-to-the-user-if-no-resources-are-found-near-their-entered-location",
+      "title": "On the Community Resources page, once a location is active (either from geolocation coordinates or a manually entered zip code/address), filter or sort the displayed resource directory to prioritize entries closest to the user's location. For zip code input, match resources whose zip code matches or is geographically nearby. For geolocation coordinates, sort resources by proximity. Display a note to the user if no resources are found near their entered location.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-resourcespage-tsx-when-the-user-submits-a-location-zip-code-city-name-like-miami-or-any-address-via-the-manual-text-input-in-the-locationbar-use-the-browser-s-native-fetch-to-call-a-free-geocoding-api-e-g-nominatim-openstreetmap-at-https-nominatim-openstreetmap-org-search-to-resolve-the-entered-text-into-latitude-longitude-coordinates-store-those-resolved-coordinates-as-the-active-location-context-so-the-existing-proximity-sort-logic-can-rank-resources-by-distance-from-those-coordinates",
+      "title": "In ResourcesPage.tsx, when the user submits a location (zip code, city name like 'Miami', or any address) via the manual text input in the LocationBar, use the browser's native fetch to call a free geocoding API (e.g., Nominatim/OpenStreetMap at https://nominatim.openstreetmap.org/search) to resolve the entered text into latitude/longitude coordinates. Store those resolved coordinates as the active location context so the existing proximity-sort logic can rank resources by distance from those coordinates.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-extend-the-community-resource-data-in-both-the-backend-backend-main-mo-and-the-static-fallback-data-in-resourcespage-tsx-to-include-latitude-and-longitude-fields-for-each-resource-entry-populate-realistic-coordinates-for-the-existing-leominster-area-resources-e-g-leominster-ma-is-approximately-lat-42-5251-lng-71-7598-update-the-communityresource-type-in-motoko-to-add-optional-lat-and-lng-float-fields-and-update-the-initialization-data-accordingly-on-the-frontend-use-these-lat-lng-fields-when-available-in-the-proximity-sort-calculation-instead-of-relying-solely-on-zip-code-comparison",
+      "title": "Extend the community resource data in both the backend (backend/main.mo) and the static fallback data in ResourcesPage.tsx to include latitude and longitude fields for each resource entry. Populate realistic coordinates for the existing Leominster-area resources (e.g., Leominster, MA is approximately lat 42.5251, lng -71.7598). Update the CommunityResource type in Motoko to add optional lat and lng Float fields, and update the initialization data accordingly. On the frontend, use these lat/lng fields (when available) in the proximity-sort calculation instead of relying solely on zip code comparison.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-locationutils-ts-to-replace-or-augment-the-zip-code-numeric-comparison-approach-with-a-haversine-distance-calculation-that-uses-lat-lng-coordinates-when-the-active-location-has-coordinates-from-geolocation-or-resolved-geocoding-sort-all-resources-with-known-coordinates-by-their-haversine-distance-from-the-active-location-ascending-resources-with-no-coordinates-fall-to-the-bottom-display-the-computed-distance-e-g-3-miles-away-next-to-each-resource-entry-in-the-resourcedirectoryitem-component-when-a-location-is-active",
+      "title": "Update locationUtils.ts to replace or augment the zip-code numeric comparison approach with a haversine distance calculation that uses lat/lng coordinates. When the active location has coordinates (from geolocation or resolved geocoding), sort all resources with known coordinates by their haversine distance from the active location, ascending. Resources with no coordinates fall to the bottom. Display the computed distance (e.g., '~3 miles away') next to each resource entry in the ResourceDirectoryItem component when a location is active.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -144,14 +209,78 @@
       "status": "pending"
     },
     {
-      "id": "AR-8",
-      "summary": "Educational workshops and learning sessions section",
+      "id": "AR-9",
+      "summary": "Advocacy skill-building and real-life practice scenarios",
       "reqIds": [],
       "status": "pending"
     },
     {
-      "id": "AR-9",
-      "summary": "Advocacy skill-building and real-life practice scenarios",
+      "id": "AR-10",
+      "summary": "Add Internet Identity login so returning community members can save progress or access personalized resources",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Remove workshops data and related queries from the backend. Remove the workshops persistent map, workshop data type, and any workshop initialization or query functions from backend/main.mo since the workshops feature is being removed from the app.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add creator/contact info: made by Leyna Gagnon, email leynag48@gmail.com for questions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Add creator and contact information to the app footer (or a suitable persistent location visible on all pages). Display 'Made by Leyna Gagnon' and 'Questions? Email leynag48@gmail.com' with the email rendered as a clickable mailto link. Style consistently with the existing warm teal-green theme.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Add a persistent footer visible on all pages that displays 'Made by Leyna Gagnon' and 'Questions? Email leynag48@gmail.com', with the email rendered as a clickable mailto link (mailto:leynag48@gmail.com). Style the footer consistently with the existing warm teal-green theme.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Add an HTML file to the website (likely for SEO or Google Search Console verification purposes)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Add a static HTML file to the frontend/public directory so it is served as a standalone page at a direct URL path. The file should be a minimal, valid HTML document. Since no specific filename or content was provided, create a placeholder named 'site-verification.html' with a basic HTML structure and a comment indicating it can be customized (e.g., for Google Search Console or other site verification tools).",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Replace the hardcoded Leominster, MA location in the Community Resource Map with a location-aware finder: request the user's geolocation (with permission) to find nearby resources, or allow the user to manually enter a zip code or address to find closest places near them.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Update the backend community resource data in backend/main.mo so that each resource entry includes a zip code field (or structured location metadata) that can be used for proximity-based filtering on the frontend. Ensure the existing Leominster-area sample data entries have their zip codes populated (e.g., 01453 for Leominster). Add the zip code field to the CommunityResource data type if it does not already exist, and update the initialization data accordingly.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "When a user enters a zip code or address (e.g., 'Miami'), actually fetch and display real nearby healthcare resources in or near that location — not just filter existing hardcoded data. Integrate a geocoding or location-based lookup so results reflect places near the user's entered location.",
       "reqIds": [],
       "status": "pending"
     }
