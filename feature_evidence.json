@@ -2,11 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-in-resourcespage-tsx-when-the-user-submits-a-location-zip-code-city-name-like-miami-or-any-address-via-the-manual-text-input-in-the-locationbar-use-the-browser-s-native-fetch-to-call-a-free-geocoding-api-e-g-nominatim-openstreetmap-at-https-nominatim-openstreetmap-org-search-to-resolve-the-entered-text-into-latitude-longitude-coordinates-store-those-resolved-coordinates-as-the-active-location-context-so-the-existing-proximity-sort-logic-can-rank-resources-by-distance-from-those-coordinates",
-      "featureTitle": "In ResourcesPage.tsx, when the user submits a location (zip code, city name like 'Miami', or any address) via the manual text input in the LocationBar, use the browser's native fetch to call a free geocoding API (e.g., Nominatim/OpenStreetMap at https://nominatim.openstreetmap.org/search) to resolve the entered text into latitude/longitude coordinates. Store those resolved coordinates as the active location context so the existing proximity-sort logic can rank resources by distance from those coordinates.",
+      "featureId": "feature-create-a-new-informational-page-e-g-rightspage-tsx-titled-know-your-healthcare-rights-that-educates-users-about-their-fundamental-rights-as-patients-and-healthcare-consumers-include-sections-covering-1-the-right-to-receive-emergency-care-regardless-of-insurance-status-or-ability-to-pay-2-the-right-to-receive-an-itemized-bill-and-dispute-charges-3-the-right-to-request-an-interpreter-or-language-assistance-services-4-the-right-to-access-and-obtain-copies-of-your-medical-records-5-the-right-to-a-second-opinion-6-the-right-to-appeal-insurance-denials-and-7-protections-against-surprise-billing-present-content-using-cards-callout-boxes-and-short-readable-sections-consistent-with-the-existing-warm-teal-green-design-system-matching-the-style-of-challengespage-tsx-and-other-informational-pages-in-the-app",
+      "featureTitle": "Create a new informational page (e.g., RightsPage.tsx) titled 'Know Your Healthcare Rights' that educates users about their fundamental rights as patients and healthcare consumers. Include sections covering: (1) the right to receive emergency care regardless of insurance status or ability to pay, (2) the right to receive an itemized bill and dispute charges, (3) the right to request an interpreter or language assistance services, (4) the right to access and obtain copies of your medical records, (5) the right to a second opinion, (6) the right to appeal insurance denials, and (7) protections against surprise billing. Present content using cards, callout boxes, and short readable sections consistent with the existing warm teal-green design system (matching the style of ChallengesPage.tsx and other informational pages in the app).",
       "files": [
-        "frontend/src/components/LocationBar.tsx",
-        "frontend/src/pages/ResourcesPage.tsx"
+        "frontend/src/pages/RightsPage.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -17,15 +16,17 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-22"
+        "REQ-34"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-extend-the-community-resource-data-in-both-the-backend-backend-main-mo-and-the-static-fallback-data-in-resourcespage-tsx-to-include-latitude-and-longitude-fields-for-each-resource-entry-populate-realistic-coordinates-for-the-existing-leominster-area-resources-e-g-leominster-ma-is-approximately-lat-42-5251-lng-71-7598-update-the-communityresource-type-in-motoko-to-add-optional-lat-and-lng-float-fields-and-update-the-initialization-data-accordingly-on-the-frontend-use-these-lat-lng-fields-when-available-in-the-proximity-sort-calculation-instead-of-relying-solely-on-zip-code-comparison",
-      "featureTitle": "Extend the community resource data in both the backend (backend/main.mo) and the static fallback data in ResourcesPage.tsx to include latitude and longitude fields for each resource entry. Populate realistic coordinates for the existing Leominster-area resources (e.g., Leominster, MA is approximately lat 42.5251, lng -71.7598). Update the CommunityResource type in Motoko to add optional lat and lng Float fields, and update the initialization data accordingly. On the frontend, use these lat/lng fields (when available) in the proximity-sort calculation instead of relying solely on zip code comparison.",
+      "featureId": "feature-register-the-new-rights-page-as-a-route-in-app-tsx-e-g-at-path-healthcare-rights-and-add-a-navigation-link-for-it-in-navigation-tsx-so-users-can-discover-and-access-it-from-the-persistent-site-wide-nav-bar-additionally-add-a-quick-link-card-for-the-rights-page-on-the-homepage-quick-links-grid-so-users-can-find-it-from-the-main-entry-point-of-the-app",
+      "featureTitle": "Register the new Rights page as a route in App.tsx (e.g., at path '/healthcare-rights') and add a navigation link for it in Navigation.tsx so users can discover and access it from the persistent site-wide nav bar. Additionally, add a quick-link card for the Rights page on the HomePage quick-links grid so users can find it from the main entry point of the app.",
       "files": [
-        "frontend/src/pages/ResourcesPage.tsx"
+        "frontend/src/App.tsx",
+        "frontend/src/components/Navigation.tsx",
+        "frontend/src/pages/HomePage.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -36,28 +37,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-23"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-locationutils-ts-to-replace-or-augment-the-zip-code-numeric-comparison-approach-with-a-haversine-distance-calculation-that-uses-lat-lng-coordinates-when-the-active-location-has-coordinates-from-geolocation-or-resolved-geocoding-sort-all-resources-with-known-coordinates-by-their-haversine-distance-from-the-active-location-ascending-resources-with-no-coordinates-fall-to-the-bottom-display-the-computed-distance-e-g-3-miles-away-next-to-each-resource-entry-in-the-resourcedirectoryitem-component-when-a-location-is-active",
-      "featureTitle": "Update locationUtils.ts to replace or augment the zip-code numeric comparison approach with a haversine distance calculation that uses lat/lng coordinates. When the active location has coordinates (from geolocation or resolved geocoding), sort all resources with known coordinates by their haversine distance from the active location, ascending. Resources with no coordinates fall to the bottom. Display the computed distance (e.g., '~3 miles away') next to each resource entry in the ResourceDirectoryItem component when a location is active.",
-      "files": [
-        "frontend/src/components/ResourceDirectoryItem.tsx",
-        "frontend/src/pages/ResourcesPage.tsx",
-        "frontend/src/utils/locationUtils.ts"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-24"
+        "REQ-35"
       ],
       "confidence": "high"
     }

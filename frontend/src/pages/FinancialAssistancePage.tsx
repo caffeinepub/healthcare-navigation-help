@@ -7,70 +7,92 @@ import type { AssistanceProgram } from '../backend';
 
 const fallbackPrograms: (AssistanceProgram & { tag: string })[] = [
   {
-    name: 'MassHealth',
-    description: 'Massachusetts\' Medicaid program providing comprehensive health coverage for eligible low-income residents, including doctor visits, hospital care, prescriptions, and more.',
-    eligibility: 'Based on income, family size, age, disability status, and immigration status. Many adults and children qualify.',
-    contactInfo: '800-841-2900',
+    name: 'State Medicaid Program',
+    description:
+      'Medicaid provides free or low-cost health coverage to eligible low-income adults, children, pregnant women, elderly adults, and people with disabilities. Each state runs its own Medicaid program.',
+    eligibility:
+      'Based on income, family size, age, disability status, and other factors. Eligibility rules vary by state.',
+    contactInfo: 'Visit your state\'s Medicaid office or call 1-800-318-2596',
     tag: 'Public Coverage',
   },
   {
-    name: 'ConnectorCare',
-    description: 'Subsidized health insurance through the Massachusetts Health Connector for residents who earn too much for MassHealth but still need help affording coverage.',
-    eligibility: 'Massachusetts residents with income between 100% and 300% of the Federal Poverty Level who are not offered affordable employer coverage.',
-    contactInfo: '877-623-6765',
-    tag: 'Public Coverage',
+    name: "Children's Health Insurance Program (CHIP)",
+    description:
+      'CHIP provides low-cost health coverage to children in families that earn too much to qualify for Medicaid but cannot afford private insurance.',
+    eligibility:
+      'Children up to age 19 in families with incomes too high for Medicaid but who need affordable coverage.',
+    contactInfo: 'Contact your state CHIP office or call 1-800-318-2596',
+    tag: "Children's Coverage",
   },
   {
-    name: 'Health Safety Net',
-    description: 'A Massachusetts program that pays for certain health services for uninsured or underinsured residents who don\'t qualify for MassHealth. Covers hospital and community health center services.',
-    eligibility: 'Massachusetts residents who are uninsured or underinsured with income at or below 400% of the Federal Poverty Level.',
-    contactInfo: '800-841-2900',
-    tag: 'State Program',
-  },
-  {
-    name: 'UMass Memorial Charity Care',
-    description: 'Financial assistance program for patients who receive care at UMass Memorial Medical Center and cannot afford to pay their bills. May cover all or part of your bill.',
-    eligibility: 'Patients with income at or below 200% of the Federal Poverty Level may qualify for free care. Sliding scale assistance available up to 400% FPL.',
-    contactInfo: '508-334-1000',
+    name: 'Hospital Charity Care / Financial Assistance',
+    description:
+      'Most hospitals are required to offer charity care or financial assistance programs to patients who cannot afford their bills. Discounts or free care may be available based on income.',
+    eligibility:
+      'Based on income relative to the federal poverty level. Ask your local hospital\'s billing or financial counseling office.',
+    contactInfo: 'Contact your local hospital\'s billing or patient financial services department',
     tag: 'Hospital Aid',
   },
   {
-    name: 'Leominster Hospital Financial Assistance',
-    description: 'Hospital-based charity care program for patients who receive care at local facilities and demonstrate financial need. Applications reviewed on a case-by-case basis.',
-    eligibility: 'Patients experiencing financial hardship. Income and asset verification required. Apply within 240 days of receiving services.',
-    contactInfo: '978-466-2000',
-    tag: 'Hospital Aid',
+    name: 'Community Health Center Sliding Scale',
+    description:
+      'Federally Qualified Health Centers (FQHCs) offer primary care services on a sliding fee scale based on your income and family size, so you pay only what you can afford.',
+    eligibility: 'Open to all patients regardless of ability to pay or insurance status.',
+    contactInfo: 'Find a health center at findahealthcenter.hrsa.gov or call 1-877-464-4772',
+    tag: 'Community Care',
   },
   {
-    name: 'Children\'s Medical Security Plan (CMSP)',
-    description: 'A Massachusetts program providing basic health coverage for uninsured children under age 19 whose families do not qualify for MassHealth.',
-    eligibility: 'Children under 19 who are Massachusetts residents and are uninsured. No income limit.',
-    contactInfo: '800-841-2900',
-    tag: 'Children\'s Coverage',
-  },
-  {
-    name: 'Prescription Advantage',
-    description: 'Massachusetts\' state pharmaceutical assistance program helping seniors and people with disabilities afford prescription medications.',
-    eligibility: 'Massachusetts residents age 65 or older, or adults with disabilities, with income below program limits.',
-    contactInfo: '800-243-4636',
+    name: 'Prescription Assistance Programs',
+    description:
+      'Many pharmaceutical companies and nonprofits offer programs to help people who cannot afford their medications. Free or discounted prescriptions may be available.',
+    eligibility:
+      'Typically based on income and lack of adequate prescription drug coverage. Requirements vary by program.',
+    contactInfo: 'Visit NeedyMeds.org or RxAssist.org, or call 1-800-503-6897',
     tag: 'Prescription Help',
+  },
+  {
+    name: 'Health Insurance Marketplace / ACA Plans',
+    description:
+      'The Health Insurance Marketplace offers subsidized health insurance plans. Premium tax credits and cost-sharing reductions may significantly lower your monthly costs.',
+    eligibility:
+      "Available to U.S. citizens and legal residents who don't have access to affordable employer coverage.",
+    contactInfo: 'Visit HealthCare.gov or call 1-800-318-2596',
+    tag: 'Public Coverage',
+  },
+  {
+    name: 'Veterans Health Administration (VA)',
+    description:
+      'The VA provides comprehensive healthcare services to eligible military veterans, including preventive care, mental health services, and specialty care.',
+    eligibility: 'U.S. military veterans who meet service and other eligibility requirements.',
+    contactInfo: 'Visit va.gov or call 1-800-827-1000',
+    tag: 'State Program',
   },
 ];
 
-const allTags = ['All', 'Public Coverage', 'State Program', 'Hospital Aid', 'Children\'s Coverage', 'Prescription Help'];
+const allTags = [
+  'All',
+  'Public Coverage',
+  'State Program',
+  'Hospital Aid',
+  "Children's Coverage",
+  'Prescription Help',
+  'Community Care',
+];
 
-export function FinancialAssistancePage() {
+export default function FinancialAssistancePage() {
   const [activeTag, setActiveTag] = useState('All');
   const { data: programs, isLoading } = useAssistancePrograms();
 
-  const backendPrograms = programs && programs.length > 0
-    ? programs.map((p) => ({ ...p, tag: 'Program' }))
-    : null;
+  const backendPrograms =
+    programs && programs.length > 0
+      ? programs.map((p) => ({ ...p, tag: 'Program' }))
+      : null;
 
   const displayPrograms = backendPrograms ?? fallbackPrograms;
-  const filtered = activeTag === 'All'
-    ? displayPrograms
-    : displayPrograms.filter((p) => p.tag === activeTag);
+  const filtered =
+    activeTag === 'All'
+      ? displayPrograms
+      : displayPrograms.filter((p) => p.tag === activeTag);
 
   return (
     <main className="py-12">
@@ -86,7 +108,8 @@ export function FinancialAssistancePage() {
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed">
             You may qualify for programs that help cover the cost of healthcare. Browse available
-            programs below and learn how to apply. Don't let cost be a barrier to getting the care you need.
+            programs below and learn how to apply. Don't let cost be a barrier to getting the care
+            you need.
           </p>
         </div>
 
@@ -132,9 +155,9 @@ export function FinancialAssistancePage() {
         <div className="mt-12 bg-secondary rounded-xl p-5 border border-border">
           <p className="text-sm text-foreground/80">
             <span className="font-bold text-primary">💡 Tip: </span>
-            When applying for financial assistance, gather documents like recent pay stubs, tax returns,
-            and proof of household size. Many programs have navigators who can help you complete the application —
-            ask when you call.
+            When applying for financial assistance, gather documents like recent pay stubs, tax
+            returns, and proof of household size. Many programs have navigators who can help you
+            complete the application — ask when you call.
           </p>
         </div>
       </div>

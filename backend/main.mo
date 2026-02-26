@@ -5,9 +5,9 @@ import Iter "mo:core/Iter";
 import Runtime "mo:core/Runtime";
 import Float "mo:core/Float";
 import MixinStorage "blob-storage/Mixin";
-import Migration "migration";
 
-(with migration = Migration.run)
+
+
 actor {
   include MixinStorage();
 
@@ -80,7 +80,7 @@ actor {
     // Healthcare Services
     let urgentCare : HealthcareService = {
       category = "Urgent Care";
-      name = "Leominster Urgent Care Center";
+      name = "Local Urgent Care Center";
       description = "Walk-in urgent care services for non-life-threatening conditions.";
       contactInfo = ?"978-555-1234";
     };
@@ -94,26 +94,26 @@ actor {
     insuranceTerms.add(deductible.term, deductible);
 
     // Assistance Program
-    let massHealth : AssistanceProgram = {
-      name = "MassHealth";
-      description = "Massachusetts' Medicaid program providing health coverage for eligible residents.";
+    let financialAssistance : AssistanceProgram = {
+      name = "Financial Assistance Program";
+      description = "A program providing health coverage for eligible individuals and families.";
       eligibility = "Based on income, family size, and specific criteria.";
       contactInfo = "800-555-9876";
     };
-    assistancePrograms.add(massHealth.name, massHealth);
+    assistancePrograms.add(financialAssistance.name, financialAssistance);
 
     // Community Resource with Zip Code and Coordinates
-    let comHealthCenter : CommunityResource = {
+    let genericHealthCenter : CommunityResource = {
       resourceType = "Community Health Center";
-      name = "Leominster Community Medical Center";
-      address = "123 Main Street, Leominster, MA";
+      name = "Main Street Community Medical Center";
+      address = "123 Main Street, Anytown, USA";
       phone = "978-555-4567";
-      website = ?"www.leominsterchc.org";
-      zipCode = "01453";
+      website = ?"www.ourchc.org";
+      zipCode = "00000";
       lat = ?42.5251;
       lng = ?(-71.7598);
     };
-    communityResources.add(comHealthCenter.name, comHealthCenter);
+    communityResources.add(genericHealthCenter.name, genericHealthCenter);
   };
 
   // Query Functions

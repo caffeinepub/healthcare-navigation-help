@@ -1,74 +1,50 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Real location-based resource lookup for any city, zip code, or address",
+  "title": "Add Healthcare Rights Informational Page",
   "requirements": [
     {
-      "id": "REQ-22",
-      "summary": "Integrate free geocoding API (Nominatim/OpenStreetMap) in ResourcesPage.tsx to resolve manual location input (zip code, city name, or address) into latitude/longitude coordinates, then use those coordinates for proximity-based resource sorting",
+      "id": "REQ-34",
+      "summary": "Create a new informational page titled 'Know Your Healthcare Rights' that educates users about their fundamental rights as patients and healthcare consumers, covering emergency care rights, billing rights, language assistance, medical records access, second opinions, insurance appeals, and surprise billing protections",
       "acceptanceCriteria": [
-        "Typing 'Miami' (or any city/zip/address) into the location input and submitting resolves to lat/lng coordinates via geocoding.",
-        "The active location display updates to reflect the resolved location name (e.g., 'Showing resources near: Miami, FL').",
-        "Resources are sorted by proximity to the resolved coordinates, not by zip-code string matching alone.",
-        "If geocoding fails or returns no results, display a user-friendly message such as 'Could not find that location. Please try a different city, zip code, or address.'",
-        "Geolocation (Use My Location) behavior is unchanged and continues to work as before."
+        "A new page component file exists (e.g., frontend/src/pages/RightsPage.tsx) and renders without errors.",
+        "The page includes at least 6 distinct content sections covering patient rights topics.",
+        "Content uses cards, callout boxes, or equivalent styled components consistent with the warm teal-green design system.",
+        "No references to specific states, cities, or location-specific programs appear in the page content.",
+        "Language is plain, accessible, and universally applicable to users anywhere in the country."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/LocationBar.tsx",
-          "operation": "modify",
-          "description": "Add geocoding logic using the browser's native fetch to call the Nominatim API (https://nominatim.openstreetmap.org/search) when the user submits manual location input. Parse the API response to extract latitude, longitude, and display name. Update the active location state to include resolved coordinates and location name. Add error handling to display a user-friendly message when geocoding fails or returns no results. Preserve existing geolocation (Use My Location) behavior without modification."
-        },
-        {
-          "path": "frontend/src/pages/ResourcesPage.tsx",
-          "operation": "modify",
-          "description": "Receive resolved coordinates from LocationBar and store them as the active location context. Update the active location display label to show the resolved location name (e.g., 'Showing resources near: Miami, FL'). Pass the active coordinates to the proximity sorting logic in locationUtils.ts instead of relying solely on zip-code string matching. Ensure the existing geolocation flow continues to work unchanged."
+          "path": "frontend/src/pages/RightsPage.tsx",
+          "operation": "create",
+          "description": "Create a new page component that presents patient healthcare rights information in 7 distinct sections: (1) emergency care rights, (2) billing and dispute rights, (3) language assistance rights, (4) medical records access, (5) second opinion rights, (6) insurance appeal rights, and (7) surprise billing protections. Use Card components from shadcn-ui and CalloutBox components (info/tip variants) to organize content with consistent warm teal-green styling matching ChallengesPage.tsx and other informational pages. Present content using short readable sections with headings, bullet points, and actionable guidance. Ensure all language is location-neutral, plain, and universally applicable."
         }
       ]
     },
     {
-      "id": "REQ-23",
-      "summary": "Extend the static fallback resource data in ResourcesPage.tsx to include latitude and longitude fields for each resource entry, and populate realistic coordinates for existing Leominster-area resources",
+      "id": "REQ-35",
+      "summary": "Register the new Rights page as a route in App.tsx at path '/healthcare-rights', add a navigation link in Navigation.tsx, and add a quick-link card on the HomePage quick-links grid",
       "acceptanceCriteria": [
-        "CommunityResource type in backend/main.mo includes optional lat and lng Float fields.",
-        "All existing sample resource entries in backend initialization data have lat/lng values populated.",
-        "The static fallback resource array in ResourcesPage.tsx includes lat/lng for each entry.",
-        "The proximity sort function in locationUtils.ts (or ResourcesPage.tsx) uses resource lat/lng coordinates when available.",
-        "Resources without lat/lng gracefully fall back to zip-code-based proximity or appear at the end of sorted results."
+        "A route for the Rights page is defined in App.tsx and navigating to its path renders the new page.",
+        "A link to the Rights page appears in Navigation.tsx alongside the other nav links.",
+        "A quick-link card for the Rights page is visible in the HomePage quick-links grid.",
+        "All navigation links are styled consistently with existing nav items."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/ResourcesPage.tsx",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add optional lat and lng number fields to the CommunityResource type definition in the static fallback data array. Populate realistic latitude and longitude coordinates for all existing Leominster-area resource entries (Leominster, MA is approximately lat 42.5251, lng -71.7598). Ensure the fallback data structure matches the updated backend CommunityResource type from backend.d.ts."
-        }
-      ]
-    },
-    {
-      "id": "REQ-24",
-      "summary": "Implement haversine distance calculation in locationUtils.ts to sort resources by actual geographic distance from active location coordinates, and display computed distance next to each resource",
-      "acceptanceCriteria": [
-        "locationUtils.ts exports a haversine distance function that accepts two lat/lng pairs and returns distance in miles.",
-        "When a location is active, resources are sorted by ascending distance from that location.",
-        "Each resource card/row displays an approximate distance label (e.g., '~5 miles away') when a location is active.",
-        "Resources without lat/lng data appear below those with coordinates and show no distance label.",
-        "Distance labels are hidden when no location is active."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/utils/locationUtils.ts",
-          "operation": "modify",
-          "description": "Add a haversine distance calculation function that accepts two lat/lng coordinate pairs and returns the distance in miles. Replace or augment the existing zip-code numeric comparison approach with coordinate-based distance sorting. When an active location has coordinates (from geolocation or geocoding), sort all resources with known lat/lng by ascending haversine distance. Resources without coordinates should fall to the bottom of the sorted list. Export a function that calculates and returns the distance for display purposes."
+          "description": "Register a new route for the Rights page at path '/healthcare-rights' using the TanStack Router configuration pattern already in place. Import RightsPage from 'frontend/src/pages/RightsPage.tsx' and add it to the router configuration alongside the existing 11 routes (AboutPage, HomePage, ChallengesPage, etc.). Ensure the route is wrapped in the persistent Navigation/Footer layout consistent with all other page routes."
         },
         {
-          "path": "frontend/src/components/ResourceDirectoryItem.tsx",
+          "path": "frontend/src/components/Navigation.tsx",
           "operation": "modify",
-          "description": "Accept an optional distance prop (number representing miles) and display it as a label (e.g., '~3 miles away') next to the resource name or address when provided. Hide the distance label when the distance prop is not provided or when no location is active. Ensure the distance display integrates cleanly with the existing resource card layout and does not disrupt the type badge, address, phone, or website link elements."
+          "description": "Add a navigation link for the Healthcare Rights page to the main navigation bar. Insert a Link component pointing to '/healthcare-rights' with the text 'Know Your Rights' (or similar concise label) in both the desktop navigation links and the mobile hamburger menu, maintaining consistency with existing nav link styling and ordering. Position the link logically within the existing navigation structure (e.g., after 'Challenges' or 'Financial Assistance')."
         },
         {
-          "path": "frontend/src/pages/ResourcesPage.tsx",
+          "path": "frontend/src/pages/HomePage.tsx",
           "operation": "modify",
-          "description": "When rendering filtered resources, calculate the distance for each resource using the haversine function from locationUtils.ts if both the active location coordinates and resource lat/lng are available. Pass the computed distance to each ResourceDirectoryItem component. Ensure resources without lat/lng appear at the bottom of the list and receive no distance prop. Only compute and display distances when a location is active (either from geolocation or geocoding)."
+          "description": "Add a quick-link card for the Healthcare Rights page to the existing quick-links grid on the HomePage. Insert a new Card component in the grid with an appropriate icon (e.g., Shield, Scale, or FileText from lucide-react), the title 'Know Your Rights', a short description (e.g., 'Learn about your fundamental rights as a patient and healthcare consumer'), and a Link to '/healthcare-rights'. Style the card consistently with the existing quick-link cards in the grid."
         }
       ]
     }

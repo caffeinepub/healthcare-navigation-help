@@ -18,25 +18,33 @@ export function HeroSection() {
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm border border-primary/30 text-primary-foreground rounded-full px-4 py-1.5 text-sm font-semibold mb-5">
                 <MapPin className="w-3.5 h-3.5" />
-                Serving Leominster, MA & Surrounding Communities
+                Helping Communities Everywhere
               </div>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-5 text-balance">
                 Healthcare Navigation Help
               </h1>
               <p className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed max-w-xl">
-                No one should miss medical care because the system is confusing, overwhelming, or hard to afford.
-                We help you find care, understand costs, and make confident decisions.
+                No one should miss medical care because the system is confusing, overwhelming, or
+                hard to afford. We help you find care, understand costs, and make confident
+                decisions.
               </p>
               <div className="flex flex-wrap gap-3">
-                <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg"
+                >
                   <Link to="/find-care">
                     Find Affordable Care <ArrowRight className="w-4 h-4 ml-1" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm border-white/40 text-white hover:bg-white/20 font-bold">
-                  <Link to="/navigation-tools">
-                    Explore Navigation Tools
-                  </Link>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="bg-white/10 backdrop-blur-sm border-white/40 text-white hover:bg-white/20 font-bold"
+                >
+                  <Link to="/navigation-tools">Explore Navigation Tools</Link>
                 </Button>
               </div>
             </div>
@@ -52,7 +60,7 @@ export function HeroSection() {
               <Users className="w-6 h-6 opacity-80" />
               <div className="text-left">
                 <div className="font-bold text-lg">Community First</div>
-                <div className="text-sm opacity-80">Families, youth & individuals</div>
+                <div className="text-sm opacity-80">Families, youth &amp; individuals</div>
               </div>
             </div>
             <div className="flex items-center justify-center gap-3">
@@ -65,8 +73,8 @@ export function HeroSection() {
             <div className="flex items-center justify-center gap-3">
               <MapPin className="w-6 h-6 opacity-80" />
               <div className="text-left">
-                <div className="font-bold text-lg">Local Focus</div>
-                <div className="text-sm opacity-80">Leominster, MA & beyond</div>
+                <div className="font-bold text-lg">Nationwide</div>
+                <div className="text-sm opacity-80">Communities across the country</div>
               </div>
             </div>
           </div>

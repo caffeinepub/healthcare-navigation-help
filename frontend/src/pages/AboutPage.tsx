@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { Heart, MapPin, Users, Globe, ArrowRight } from 'lucide-react';
+import { Heart, Users, Globe, ArrowRight, BookOpen, MapPin, Shield, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -13,15 +13,43 @@ const whoWeServe = [
 ];
 
 const whatWeDo = [
-  { icon: '📚', title: 'Educational Guides', description: 'Easy-to-read resources explaining healthcare systems, insurance, and billing in plain language.' },
-  { icon: '🎯', title: 'Learning Sessions', description: 'Community sessions covering insurance basics, bill navigation, and advocacy skills.' },
-  { icon: '🧭', title: 'Step-by-Step Navigation Tools', description: 'Guided journeys and checklists for common healthcare situations.' },
-  { icon: '🗺️', title: 'Community Resource Mapping', description: 'A directory of local healthcare resources in Leominster and surrounding communities.' },
-  { icon: '💪', title: 'Advocacy Skill Building', description: 'Tools and practice to help you communicate confidently with healthcare providers.' },
-  { icon: '🤝', title: 'Real-Life Practice Scenarios', description: 'Practical examples and scenarios to build confidence before real healthcare encounters.' },
+  {
+    icon: '📚',
+    title: 'Educational Guides',
+    description:
+      'Easy-to-read resources explaining healthcare systems, insurance, and billing in plain language.',
+  },
+  {
+    icon: '🎯',
+    title: 'Learning Sessions',
+    description: 'Community sessions covering insurance basics, bill navigation, and advocacy skills.',
+  },
+  {
+    icon: '🧭',
+    title: 'Step-by-Step Navigation Tools',
+    description: 'Guided journeys and checklists for common healthcare situations.',
+  },
+  {
+    icon: '🗺️',
+    title: 'Community Resource Mapping',
+    description:
+      'A searchable directory of local healthcare resources to help you find care near you.',
+  },
+  {
+    icon: '💪',
+    title: 'Advocacy Skill Building',
+    description:
+      'Tools and practice to help you communicate confidently with healthcare providers.',
+  },
+  {
+    icon: '🤝',
+    title: 'Real-Life Practice Scenarios',
+    description:
+      'Practical examples and scenarios to build confidence before real healthcare encounters.',
+  },
 ];
 
-export function AboutPage() {
+export default function AboutPage() {
   return (
     <main className="py-12">
       <div className="container mx-auto px-4">
@@ -36,15 +64,17 @@ export function AboutPage() {
             Healthcare Access Should Be Fair, Understandable, and Achievable for Everyone
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl mx-auto">
-            Healthcare Navigation Help is a community support program designed to make healthcare easier
-            to understand, easier to access, and more affordable for individuals and families.
+            Healthcare Navigation Help is a community support program designed to make healthcare
+            easier to understand, easier to access, and more affordable for individuals and families
+            — wherever they are.
           </p>
         </div>
 
         {/* Mission Statement */}
         <div className="bg-primary rounded-2xl p-8 md:p-12 text-center text-primary-foreground mb-16 max-w-4xl mx-auto">
           <p className="font-serif text-2xl md:text-3xl font-bold leading-relaxed">
-            "No one should miss medical care because the system is confusing, overwhelming, or hard to afford."
+            "No one should miss medical care because the system is confusing, overwhelming, or hard
+            to afford."
           </p>
         </div>
 
@@ -54,16 +84,21 @@ export function AboutPage() {
             What We Do
           </h2>
           <p className="text-muted-foreground text-center mb-10 max-w-2xl mx-auto">
-            We provide clear guidance and practical tools so people can successfully move through the
-            healthcare system step by step. We focus on real-life navigation skills, not just information.
+            We provide clear guidance and practical tools so people can successfully move through
+            the healthcare system step by step. We focus on real-life navigation skills, not just
+            information.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {whatWeDo.map((item, i) => (
               <Card key={i} className="shadow-card border-border">
                 <CardContent className="pt-6 pb-6">
                   <div className="text-3xl mb-3">{item.icon}</div>
-                  <h3 className="font-serif font-bold text-foreground text-lg mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
+                  <h3 className="font-serif font-bold text-foreground text-lg mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.description}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -79,12 +114,12 @@ export function AboutPage() {
                 Who We Serve
               </div>
               <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Built for Our Community
+                Built for Everyone
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Our program is especially helpful for people who face barriers to healthcare that are
-                not medical — but logistical, financial, or informational. We help people become
-                confident healthcare decision-makers, not just patients.
+                Our program is especially helpful for people who face barriers to healthcare that
+                are not medical — but logistical, financial, or informational. We help people
+                become confident healthcare decision-makers, not just patients.
               </p>
               <Button asChild className="font-bold">
                 <Link to="/find-care">
@@ -106,25 +141,25 @@ export function AboutPage() {
           </div>
         </section>
 
-        {/* Service Area */}
+        {/* Reach */}
         <section className="mb-16 max-w-4xl mx-auto">
           <div className="bg-secondary rounded-2xl p-8 border border-border">
             <div className="flex items-center gap-2 text-primary text-sm font-semibold mb-3">
-              <MapPin className="w-4 h-4" />
-              Our Service Area
+              <Globe className="w-4 h-4" />
+              Our Reach
             </div>
             <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">
-              Leominster, MA &amp; Surrounding Communities
+              Helping Communities Everywhere
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              We support individuals and families in Leominster and surrounding communities across
-              Massachusetts, including Fitchburg, Gardner, Westminster, Lunenburg, and the broader
-              North Central Massachusetts region.
+              We support individuals and families across the country. Our tools and resources are
+              available to anyone, anywhere — helping people find care and understand their options
+              no matter where they live.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              We also help individuals better understand how to navigate large regional healthcare
-              systems, including providers such as UMass Memorial Medical Center and other major care
-              networks serving our communities.
+              We also help individuals better understand how to navigate large healthcare systems,
+              including major hospital networks, insurance providers, and community health
+              organizations serving people in their area.
             </p>
           </div>
         </section>
@@ -140,15 +175,15 @@ export function AboutPage() {
               From Local to Global Impact
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl mx-auto mb-6">
-              Healthcare Navigation Help is building a model that can grow from local communities to
-              regional, national, and global impact — empowering people everywhere to confidently
-              access the care they need.
+              Healthcare Navigation Help is building a model that can grow from local communities
+              to regional, national, and global impact — empowering people everywhere to
+              confidently access the care they need.
             </p>
             <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              We believe that when people understand how to use the healthcare system, they get care
-              earlier, reduce their financial burden, avoid confusion and mistakes, and take control
-              of their health decisions. Healthcare becomes more accessible when people understand
-              how to use it.
+              We believe that when people understand how to use the healthcare system, they get
+              care earlier, reduce their financial burden, avoid confusion and mistakes, and take
+              control of their health decisions. Healthcare becomes more accessible when people
+              understand how to use it.
             </p>
           </div>
         </section>
@@ -171,9 +206,7 @@ export function AboutPage() {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="font-bold">
-                <Link to="/resources">
-                  Browse Community Resources
-                </Link>
+                <Link to="/resources">Browse Community Resources</Link>
               </Button>
             </div>
           </div>

@@ -14,97 +14,81 @@ import type { CommunityResource } from '../backend';
 
 const fallbackResources: CommunityResource[] = [
   {
-    name: 'Leominster Community Medical Center',
+    name: 'Community Health Center',
     resourceType: 'Community Health Center',
-    address: '123 Main Street, Leominster, MA 01453',
-    phone: '978-555-4567',
-    website: 'www.leominsterchc.org',
-    zipCode: '01453',
-    lat: 42.5251,
-    lng: -71.7598,
+    address: '123 Main Street, Anytown, USA',
+    phone: '(800) 555-0100',
+    website: 'findahealthcenter.hrsa.gov',
+    zipCode: '',
+    lat: undefined,
+    lng: undefined,
   },
   {
-    name: 'North Central MA Free Clinic',
-    resourceType: 'Community Health Center',
-    address: '45 Central Street, Fitchburg, MA 01420',
-    phone: '978-555-3456',
+    name: 'Free Community Clinic',
+    resourceType: 'Free Clinic',
+    address: '456 Oak Avenue, Your City, USA',
+    phone: '(800) 555-0101',
+    website: 'freeclinics.us',
+    zipCode: '',
+    lat: undefined,
+    lng: undefined,
+  },
+  {
+    name: 'Local Hospital Financial Assistance Office',
+    resourceType: 'Hospital',
+    address: '789 Hospital Drive, Your City, USA',
+    phone: '(800) 555-0102',
     website: undefined,
-    zipCode: '01420',
-    lat: 42.5834,
-    lng: -71.8023,
+    zipCode: '',
+    lat: undefined,
+    lng: undefined,
   },
   {
-    name: 'Montachusett Opportunity Council',
-    resourceType: 'Financial Aid',
-    address: '100 Erdman Way, Leominster, MA 01453',
-    phone: '978-345-7040',
-    website: 'www.moc-inc.org',
-    zipCode: '01453',
-    lat: 42.5251,
-    lng: -71.7598,
-  },
-  {
-    name: 'Behavioral Health Network',
+    name: 'Community Mental Health Center',
     resourceType: 'Mental Health',
-    address: '417 Main Street, Fitchburg, MA 01420',
-    phone: '978-345-0181',
-    website: 'www.bhninc.org',
-    zipCode: '01420',
-    lat: 42.5834,
-    lng: -71.8023,
+    address: '321 Wellness Blvd, Your City, USA',
+    phone: '(800) 555-0103',
+    website: 'samhsa.gov/find-help',
+    zipCode: '',
+    lat: undefined,
+    lng: undefined,
   },
   {
-    name: 'Leominster Dental Health Center',
-    resourceType: 'Dental',
-    address: '78 West Street, Leominster, MA 01453',
-    phone: '978-555-8901',
-    website: undefined,
-    zipCode: '01453',
-    lat: 42.5251,
-    lng: -71.7598,
+    name: 'Prescription Assistance Program',
+    resourceType: 'Pharmacy',
+    address: '654 Care Lane, Your City, USA',
+    phone: '(800) 555-0104',
+    website: 'needymeds.org',
+    zipCode: '',
+    lat: undefined,
+    lng: undefined,
   },
   {
-    name: 'Greater Gardner Community Health Center',
-    resourceType: 'Primary Care',
-    address: '160 Elm Street, Gardner, MA 01440',
-    phone: '978-630-6300',
-    website: 'www.ggchc.org',
-    zipCode: '01440',
-    lat: 42.5751,
-    lng: -71.9981,
-  },
-  {
-    name: 'Advocates Community Counseling',
-    resourceType: 'Mental Health',
-    address: '1 Arch Street, Leominster, MA 01453',
-    phone: '978-537-0771',
-    website: 'www.advocates.org',
-    zipCode: '01453',
-    lat: 42.5251,
-    lng: -71.7598,
-  },
-  {
-    name: 'MassHealth Enrollment Center',
-    resourceType: 'Financial Aid',
-    address: '100 Erdman Way, Leominster, MA 01453',
-    phone: '800-841-2900',
-    website: 'www.mass.gov/masshealth',
-    zipCode: '01453',
-    lat: 42.5251,
-    lng: -71.7598,
+    name: 'Local Social Services Office',
+    resourceType: 'Social Services',
+    address: '987 Support Street, Your City, USA',
+    phone: '(800) 555-0105',
+    website: 'benefits.gov',
+    zipCode: '',
+    lat: undefined,
+    lng: undefined,
   },
 ];
 
 const resourceTypes = [
   'All',
   'Community Health Center',
-  'Primary Care',
+  'Free Clinic',
+  'Hospital',
   'Mental Health',
-  'Dental',
+  'Pharmacy',
+  'Social Services',
+  'Primary Care',
   'Financial Aid',
+  'Dental',
 ];
 
-export function ResourcesPage() {
+export default function ResourcesPage() {
   const [activeType, setActiveType] = useState('All');
   const [activeLocation, setActiveLocation] = useState<ActiveLocation | null>(null);
   const geolocation = useGeolocation();
@@ -129,9 +113,8 @@ export function ResourcesPage() {
     (activeLocation?.type === 'coords' ? activeLocation.coords?.longitude : undefined);
 
   // Apply location filter / sort on top of type filter
-  let locationFiltered: Array<{ resource: CommunityResource; distance: number | null }> = typeFiltered.map(
-    (r) => ({ resource: r, distance: null })
-  );
+  let locationFiltered: Array<{ resource: CommunityResource; distance: number | null }> =
+    typeFiltered.map((r) => ({ resource: r, distance: null }));
   let noLocationResults = false;
 
   if (activeLocation) {

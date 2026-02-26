@@ -1,15 +1,17 @@
 import { createRouter, createRoute, createRootRoute, RouterProvider, Outlet } from '@tanstack/react-router';
 import { Navigation, Footer } from './components/Navigation';
-import { HomePage } from './pages/HomePage';
-import { FindCarePage } from './pages/FindCarePage';
-import { InsuranceGuidePage } from './pages/InsuranceGuidePage';
-import { AppointmentPrepPage } from './pages/AppointmentPrepPage';
-import { MedicalBillGuidePage } from './pages/MedicalBillGuidePage';
-import { FinancialAssistancePage } from './pages/FinancialAssistancePage';
-import { ResourcesPage } from './pages/ResourcesPage';
-import { NavigationToolsPage } from './pages/NavigationToolsPage';
+import HomePage from './pages/HomePage';
+import FindCarePage from './pages/FindCarePage';
+import InsuranceGuidePage from './pages/InsuranceGuidePage';
+import AppointmentPrepPage from './pages/AppointmentPrepPage';
+import MedicalBillGuidePage from './pages/MedicalBillGuidePage';
+import FinancialAssistancePage from './pages/FinancialAssistancePage';
+import ResourcesPage from './pages/ResourcesPage';
+import NavigationToolsPage from './pages/NavigationToolsPage';
 import { GuidedJourneyPage } from './pages/GuidedJourneyPage';
-import { AboutPage } from './pages/AboutPage';
+import AboutPage from './pages/AboutPage';
+import ChallengesPage from './pages/ChallengesPage';
+import RightsPage from './pages/RightsPage';
 
 // Root layout with persistent nav + footer
 const rootRoute = createRootRoute({
@@ -84,6 +86,18 @@ const aboutRoute = createRoute({
   component: AboutPage,
 });
 
+const challengesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/challenges',
+  component: ChallengesPage,
+});
+
+const rightsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/healthcare-rights',
+  component: RightsPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   findCareRoute,
@@ -95,6 +109,8 @@ const routeTree = rootRoute.addChildren([
   navigationToolsRoute,
   guidedJourneyRoute,
   aboutRoute,
+  challengesRoute,
+  rightsRoute,
 ]);
 
 const router = createRouter({ routeTree });

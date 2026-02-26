@@ -1,80 +1,58 @@
 {
   "kind": "build_request",
-  "title": "Real location-based resource lookup for any city, zip code, or address",
+  "title": "Add a new informational page: Understanding Your Healthcare Rights",
   "projectName": "Healthcare Navigation Help",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-22",
-      "text": "In ResourcesPage.tsx, when the user submits a location (zip code, city name like 'Miami', or any address) via the manual text input in the LocationBar, use the browser's native fetch to call a free geocoding API (e.g., Nominatim/OpenStreetMap at https://nominatim.openstreetmap.org/search) to resolve the entered text into latitude/longitude coordinates. Store those resolved coordinates as the active location context so the existing proximity-sort logic can rank resources by distance from those coordinates.",
+      "id": "REQ-34",
+      "text": "Create a new informational page (e.g., RightsPage.tsx) titled 'Know Your Healthcare Rights' that educates users about their fundamental rights as patients and healthcare consumers. Include sections covering: (1) the right to receive emergency care regardless of insurance status or ability to pay, (2) the right to receive an itemized bill and dispute charges, (3) the right to request an interpreter or language assistance services, (4) the right to access and obtain copies of your medical records, (5) the right to a second opinion, (6) the right to appeal insurance denials, and (7) protections against surprise billing. Present content using cards, callout boxes, and short readable sections consistent with the existing warm teal-green design system (matching the style of ChallengesPage.tsx and other informational pages in the app).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-1"
         ],
         "quotes": [
-          "Make it so it actually shows nearby places when u put in zip code/address example if they put Miami make it so that it shows up places in Miami or near where they live"
+          "Add another information page"
         ]
       },
       "acceptanceCriteria": [
-        "Typing 'Miami' (or any city/zip/address) into the location input and submitting resolves to lat/lng coordinates via geocoding.",
-        "The active location display updates to reflect the resolved location name (e.g., 'Showing resources near: Miami, FL').",
-        "Resources are sorted by proximity to the resolved coordinates, not by zip-code string matching alone.",
-        "If geocoding fails or returns no results, display a user-friendly message such as 'Could not find that location. Please try a different city, zip code, or address.'",
-        "Geolocation (Use My Location) behavior is unchanged and continues to work as before."
+        "A new page component file exists (e.g., frontend/src/pages/RightsPage.tsx) and renders without errors.",
+        "The page includes at least 6 distinct content sections covering patient rights topics.",
+        "Content uses cards, callout boxes, or equivalent styled components consistent with the warm teal-green design system.",
+        "No references to specific states, cities, or location-specific programs appear in the page content.",
+        "Language is plain, accessible, and universally applicable to users anywhere in the country."
       ]
     },
     {
-      "id": "REQ-23",
-      "text": "Extend the community resource data in both the backend (backend/main.mo) and the static fallback data in ResourcesPage.tsx to include latitude and longitude fields for each resource entry. Populate realistic coordinates for the existing Leominster-area resources (e.g., Leominster, MA is approximately lat 42.5251, lng -71.7598). Update the CommunityResource type in Motoko to add optional lat and lng Float fields, and update the initialization data accordingly. On the frontend, use these lat/lng fields (when available) in the proximity-sort calculation instead of relying solely on zip code comparison.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "Make it so it actually shows nearby places when u put in zip code/address"
-        ]
-      },
-      "acceptanceCriteria": [
-        "CommunityResource type in backend/main.mo includes optional lat and lng Float fields.",
-        "All existing sample resource entries in backend initialization data have lat/lng values populated.",
-        "The static fallback resource array in ResourcesPage.tsx includes lat/lng for each entry.",
-        "The proximity sort function in locationUtils.ts (or ResourcesPage.tsx) uses resource lat/lng coordinates when available.",
-        "Resources without lat/lng gracefully fall back to zip-code-based proximity or appear at the end of sorted results."
-      ]
-    },
-    {
-      "id": "REQ-24",
-      "text": "Update locationUtils.ts to replace or augment the zip-code numeric comparison approach with a haversine distance calculation that uses lat/lng coordinates. When the active location has coordinates (from geolocation or resolved geocoding), sort all resources with known coordinates by their haversine distance from the active location, ascending. Resources with no coordinates fall to the bottom. Display the computed distance (e.g., '~3 miles away') next to each resource entry in the ResourceDirectoryItem component when a location is active.",
+      "id": "REQ-35",
+      "text": "Register the new Rights page as a route in App.tsx (e.g., at path '/healthcare-rights') and add a navigation link for it in Navigation.tsx so users can discover and access it from the persistent site-wide nav bar. Additionally, add a quick-link card for the Rights page on the HomePage quick-links grid so users can find it from the main entry point of the app.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-1"
         ],
         "quotes": [
-          "shows up places in Miami or near where they live"
+          "Add another information page"
         ]
       },
       "acceptanceCriteria": [
-        "locationUtils.ts exports a haversine distance function that accepts two lat/lng pairs and returns distance in miles.",
-        "When a location is active, resources are sorted by ascending distance from that location.",
-        "Each resource card/row displays an approximate distance label (e.g., '~5 miles away') when a location is active.",
-        "Resources without lat/lng data appear below those with coordinates and show no distance label.",
-        "Distance labels are hidden when no location is active."
+        "A route for the Rights page is defined in App.tsx and navigating to its path renders the new page.",
+        "A link to the Rights page appears in Navigation.tsx alongside the other nav links.",
+        "A quick-link card for the Rights page is visible in the HomePage quick-links grid.",
+        "All navigation links are styled consistently with existing nav items."
       ]
     }
   ],
   "constraints": [
-    "Do not use paid geocoding APIs. Use Nominatim (OpenStreetMap) or another free, no-key-required geocoding endpoint.",
-    "Do not modify files listed in frontend.immutablePaths.",
-    "Keep all Motoko logic in backend/main.mo (single-actor architecture)."
+    "Do not modify any files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui.",
+    "All user-facing text must use universal, location-neutral language — no references to Leominster, Massachusetts, or any specific state or city.",
+    "Visual style must be consistent with the existing warm teal-green design system used throughout the app."
   ],
   "nonGoals": [
-    "Building a custom map visualization or embedding an interactive map.",
-    "Storing user location data in the backend.",
-    "Supporting real-time resource database lookups from external healthcare directories.",
-    "Changing the overall page layout or visual theme."
+    "No backend changes are required for this page — it is static informational content only.",
+    "Do not add legal advice or jurisdiction-specific legal language.",
+    "Do not add any new backend data types or query functions."
   ],
   "imageRequirements": {
     "required": [],

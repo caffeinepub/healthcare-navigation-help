@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { ArrowRight, Search, FileText, DollarSign, Map, BookOpen, Compass } from 'lucide-react';
+import { ArrowRight, Search, FileText, DollarSign, Map, BookOpen, Compass, AlertTriangle, Shield } from 'lucide-react';
 import { HeroSection } from '../components/HeroSection';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -32,7 +32,7 @@ const quickLinks = [
   {
     icon: Map,
     title: 'Financial Assistance',
-    description: 'Discover MassHealth, hospital charity care, and other programs.',
+    description: 'Discover programs that can help cover your healthcare costs.',
     path: '/financial-assistance',
     color: 'text-accent-foreground',
     bg: 'bg-accent/15',
@@ -40,7 +40,7 @@ const quickLinks = [
   {
     icon: BookOpen,
     title: 'Community Resources',
-    description: 'Browse local healthcare resources in Leominster and surrounding areas.',
+    description: 'Browse local healthcare resources and support services near you.',
     path: '/resources',
     color: 'text-primary',
     bg: 'bg-primary/10',
@@ -50,6 +50,22 @@ const quickLinks = [
     title: 'Navigation Tools',
     description: 'Step-by-step guided journeys for common healthcare situations.',
     path: '/navigation-tools',
+    color: 'text-primary',
+    bg: 'bg-primary/10',
+  },
+  {
+    icon: AlertTriangle,
+    title: 'Healthcare Challenges',
+    description: 'Learn about common healthcare obstacles, billing pitfalls, and how to overcome them.',
+    path: '/challenges',
+    color: 'text-amber-600',
+    bg: 'bg-amber-100 dark:bg-amber-950/40',
+  },
+  {
+    icon: Shield,
+    title: 'Know Your Rights',
+    description: 'Learn about your fundamental rights as a patient and healthcare consumer.',
+    path: '/healthcare-rights',
     color: 'text-primary',
     bg: 'bg-primary/10',
   },
@@ -65,7 +81,7 @@ const whatWeDo = [
   { emoji: '✔', text: 'Make informed healthcare decisions' },
 ];
 
-export function HomePage() {
+export default function HomePage() {
   return (
     <main>
       <HeroSection />
@@ -78,7 +94,8 @@ export function HomePage() {
               How Can We Help You Today?
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Choose a topic to get started. All our tools are free and designed for real people navigating real situations.
+              Choose a topic to get started. All our tools are free and designed for real people
+              navigating real situations.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -88,13 +105,17 @@ export function HomePage() {
                 <Link key={link.path} to={link.path} className="group">
                   <Card className="h-full shadow-card hover:shadow-card-hover transition-all duration-200 border-border group-hover:border-primary/30">
                     <CardContent className="pt-6 pb-6">
-                      <div className={`w-12 h-12 rounded-xl ${link.bg} flex items-center justify-center mb-4`}>
+                      <div
+                        className={`w-12 h-12 rounded-xl ${link.bg} flex items-center justify-center mb-4`}
+                      >
                         <Icon className={`w-6 h-6 ${link.color}`} />
                       </div>
-                      <h3 className="font-serif font-bold text-foreground text-lg mb-2 group-hover:text-primary transition-colors">
+                      <h3 className="font-serif font-bold text-foreground text-lg mb-2">
                         {link.title}
                       </h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">{link.description}</p>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
+                        {link.description}
+                      </p>
                     </CardContent>
                   </Card>
                 </Link>
@@ -105,59 +126,58 @@ export function HomePage() {
       </section>
 
       {/* What We Do */}
-      <section className="py-16 section-pattern relative">
-        <div className="absolute inset-0 bg-primary/5" />
-        <div className="container mx-auto px-4 relative">
+      <section className="py-16 bg-secondary/40">
+        <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-                  We Support You Every Step of the Way
+                <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-5">
+                  We Help You Navigate Every Step
                 </h2>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  Healthcare systems can be complicated. Many people don't know where to go for affordable care,
-                  how insurance works, or what to do when they receive a medical bill. We provide clear guidance
-                  and practical tools so you can move through the system with confidence.
+                <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                  Healthcare can feel overwhelming — confusing paperwork, unexpected bills, and
+                  hard-to-understand insurance. We're here to make it simpler.
                 </p>
-                <Button asChild className="font-bold">
-                  <Link to="/about">
-                    Learn About Our Mission <ArrowRight className="w-4 h-4 ml-1" />
-                  </Link>
-                </Button>
+                <ul className="space-y-3">
+                  {whatWeDo.map((item, i) => (
+                    <li key={i} className="flex items-center gap-3">
+                      <span className="text-primary font-bold text-lg">{item.emoji}</span>
+                      <span className="text-foreground text-sm">{item.text}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="space-y-3">
-                {whatWeDo.map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 bg-card rounded-lg px-4 py-3 shadow-xs border border-border">
-                    <span className="text-primary font-bold text-lg">{item.emoji}</span>
-                    <span className="text-foreground text-sm font-medium">{item.text}</span>
-                  </div>
-                ))}
+              <div className="relative">
+                <img
+                  src="/assets/generated/section-bg-pattern.dim_1440x400.png"
+                  alt="Healthcare navigation illustration"
+                  className="rounded-2xl shadow-card w-full object-cover"
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Appointment Prep CTA */}
+      {/* Appointment CTA */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="bg-primary rounded-2xl p-8 md:p-12 text-center text-primary-foreground">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
-              Have an Upcoming Appointment?
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Preparing for an Appointment?
             </h2>
-            <p className="text-primary-foreground/80 text-lg mb-8 max-w-xl mx-auto">
-              Use our interactive checklist to prepare — know what to bring, what to ask, and how to advocate for yourself.
+            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+              Use our appointment prep checklist to make the most of your time with your doctor.
+              Know what to bring, what to ask, and how to follow up.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button asChild size="lg" variant="outline" className="bg-white/10 border-white/30 text-white hover:bg-white/20 font-bold">
+              <Button asChild size="lg" className="font-bold">
                 <Link to="/appointment-prep">
-                  Open Appointment Checklist <ArrowRight className="w-4 h-4 ml-1" />
+                  Appointment Prep Guide <ArrowRight className="w-4 h-4 ml-1" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="bg-white/10 border-white/30 text-white hover:bg-white/20 font-bold">
-                <Link to="/resources">
-                  Browse Community Resources
-                </Link>
+              <Button asChild size="lg" variant="outline" className="font-bold">
+                <Link to="/find-care">Find Care Near You</Link>
               </Button>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MapPin, Loader2 } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { useHealthcareServices } from '../hooks/useQueries';
 import { ServiceCategoryCard } from '../components/ServiceCategoryCard';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -8,59 +8,70 @@ import { Skeleton } from '@/components/ui/skeleton';
 const fallbackServices = [
   {
     category: 'Urgent Care',
-    name: 'Leominster Urgent Care Center',
-    description: 'Walk-in urgent care for non-life-threatening conditions. No appointment needed. Open 7 days a week for illnesses, minor injuries, and more.',
-    contactInfo: '978-555-1234',
+    name: 'Urgent Care Center',
+    description:
+      'Walk-in urgent care for non-life-threatening conditions. No appointment needed. Open 7 days a week for illnesses, minor injuries, and more.',
+    contactInfo: 'Search online for urgent care centers near you',
   },
   {
     category: 'Community Health',
-    name: 'Leominster Community Medical Center',
-    description: 'Federally Qualified Health Center offering primary care on a sliding-fee scale based on income. Serves uninsured and underinsured patients.',
-    contactInfo: '978-555-4567',
+    name: 'Community Health Center (FQHC)',
+    description:
+      'Federally Qualified Health Center offering primary care on a sliding-fee scale based on income. Serves uninsured and underinsured patients.',
+    contactInfo: 'findahealthcenter.hrsa.gov or call 1-877-464-4772',
   },
   {
     category: 'Routine Care',
-    name: 'Greater Leominster Primary Care',
-    description: 'Comprehensive primary care for adults and children. Preventive care, chronic disease management, and annual wellness visits.',
-    contactInfo: '978-555-7890',
+    name: 'Primary Care Physician',
+    description:
+      'Comprehensive primary care for adults and children. Preventive care, chronic disease management, and annual wellness visits.',
+    contactInfo: 'Search your insurance directory or ask your insurer for in-network providers',
   },
   {
     category: 'Specialist',
-    name: 'UMass Memorial Specialty Clinics',
-    description: 'Specialist care including cardiology, orthopedics, dermatology, and more. Referral from primary care provider typically required.',
-    contactInfo: '508-555-2345',
+    name: 'Specialty Care Clinic',
+    description:
+      'Specialist care including cardiology, orthopedics, dermatology, and more. Referral from primary care provider typically required.',
+    contactInfo: 'Ask your primary care provider for a referral',
   },
   {
     category: 'Community Health',
-    name: 'North Central MA Free Clinic',
-    description: 'Free medical care for uninsured adults. Volunteer physicians provide basic primary care services at no cost.',
-    contactInfo: '978-555-3456',
+    name: 'Free Clinic',
+    description:
+      'Free medical care for uninsured adults. Volunteer physicians provide basic primary care services at no cost.',
+    contactInfo: 'freeclinics.us',
   },
   {
     category: 'Routine Care',
-    name: 'Fitchburg Family Health Center',
-    description: 'Family medicine practice accepting MassHealth and most insurance plans. Same-day appointments often available.',
-    contactInfo: '978-555-6789',
+    name: 'Family Health Center',
+    description:
+      'Family medicine practice accepting most insurance plans. Same-day appointments often available.',
+    contactInfo: 'Search online for family health centers in your area',
   },
 ];
 
 const categories = ['All', 'Urgent Care', 'Routine Care', 'Specialist', 'Community Health'];
 
 const categoryGuidance: Record<string, string> = {
-  'Urgent Care': 'Go here for: sudden illness, minor injuries, infections, or when your doctor is unavailable. Not for emergencies — call 911 for life-threatening situations.',
-  'Routine Care': 'Go here for: annual checkups, managing chronic conditions, vaccinations, and preventive care. Establish a relationship with a primary care provider.',
-  'Specialist': 'Go here for: specific health conditions requiring expert care. Usually requires a referral from your primary care provider.',
-  'Community Health': 'Go here for: affordable or free care regardless of insurance status. Fees are based on your income (sliding scale).',
+  'Urgent Care':
+    'Go here for: sudden illness, minor injuries, infections, or when your doctor is unavailable. Not for emergencies — call 911 for life-threatening situations.',
+  'Routine Care':
+    'Go here for: annual checkups, managing chronic conditions, vaccinations, and preventive care. Establish a relationship with a primary care provider.',
+  Specialist:
+    'Go here for: specific health conditions requiring expert care. Usually requires a referral from your primary care provider.',
+  'Community Health':
+    'Go here for: affordable or free care regardless of insurance status. Fees are based on your income (sliding scale).',
 };
 
-export function FindCarePage() {
+export default function FindCarePage() {
   const [activeCategory, setActiveCategory] = useState('All');
   const { data: services, isLoading } = useHealthcareServices();
 
-  const displayServices = (services && services.length > 0) ? services : fallbackServices;
-  const filtered = activeCategory === 'All'
-    ? displayServices
-    : displayServices.filter((s) => s.category === activeCategory);
+  const displayServices = services && services.length > 0 ? services : fallbackServices;
+  const filtered =
+    activeCategory === 'All'
+      ? displayServices
+      : displayServices.filter((s) => s.category === activeCategory);
 
   return (
     <main className="py-12">
@@ -69,14 +80,14 @@ export function FindCarePage() {
         <div className="max-w-3xl mb-10">
           <div className="flex items-center gap-2 text-primary text-sm font-semibold mb-3">
             <MapPin className="w-4 h-4" />
-            Leominster, MA & Surrounding Communities
+            Healthcare Services
           </div>
           <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
             Find Affordable Care
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            Not sure where to go for your health needs? Browse care options by type and find the right
-            place for your situation — from urgent walk-in care to free community clinics.
+            Not sure where to go for your health needs? Browse care options by type and find the
+            right place for your situation — from urgent walk-in care to free community clinics.
           </p>
         </div>
 
@@ -130,8 +141,9 @@ export function FindCarePage() {
         <div className="mt-12 bg-destructive/8 border border-destructive/20 rounded-xl p-5">
           <p className="text-sm text-foreground/80">
             <span className="font-bold text-destructive">🚨 Emergency? </span>
-            If you are experiencing a life-threatening emergency, call <strong>911</strong> immediately or go to the nearest emergency room.
-            Hospitals are required by law to treat you regardless of your insurance status or ability to pay.
+            If you are experiencing a life-threatening emergency, call <strong>911</strong>{' '}
+            immediately or go to the nearest emergency room. Hospitals are required by law to treat
+            you regardless of your insurance status or ability to pay.
           </p>
         </div>
       </div>

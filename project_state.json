@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 17,
-  "summary": "Healthcare Navigation Help is a community support web app/program for individuals and families in Leominster, MA and surrounding communities. It helps users find affordable care, understand insurance, prepare for appointments, manage medical bills, access financial assistance programs, and build healthcare advocacy skills. The vision is to expand from local to national/global impact.",
+  "projectStateVersion": 25,
+  "summary": "Healthcare Navigation Help is a community support web app/program for individuals and families everywhere (not limited to Leominster, MA or Massachusetts). It helps users find affordable care, understand insurance, prepare for appointments, manage medical bills, access financial assistance programs, and build healthcare advocacy skills. The vision is to expand from local to national/global impact.",
   "architectural_notes": [
-    "Target audience: individuals and families in Leominster, MA and surrounding communities, including first-time insurance users, youth, and those facing medical bills",
     "Program focuses on real-life navigation skills and actionable tools, not just informational content",
     "Vision includes scalability from local/regional to national and global reach",
     "Community resource finder should support geolocation (with user permission) and manual zip code/address input to find nearby resources, replacing the hardcoded Leominster, MA location",
-    "Location-based resource search should return real nearby places relevant to the user's entered location (city, zip, or address), not just filter hardcoded local data"
+    "Location-based resource search should return real nearby places relevant to the user's entered location (city, zip, or address), not just filter hardcoded local data",
+    "App should use general/universal language throughout — avoid hardcoding references to Leominster, MA or Massachusetts in UI text, descriptions, and informational content"
   ],
   "known_issues": [],
   "isFixRequest": false,
@@ -163,6 +163,78 @@
         "REQ-24"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-create-a-new-healthcare-challenges-informational-page-e-g-challengespage-tsx-that-educates-users-about-common-healthcare-problems-and-obstacles-people-face-when-navigating-the-system-include-sections-covering-topics-such-as-understanding-why-healthcare-is-confusing-and-expensive-common-barriers-to-care-cost-lack-of-insurance-language-transportation-what-to-do-when-you-can-t-afford-care-how-to-avoid-common-pitfalls-with-insurance-and-billing-and-tips-for-advocating-for-yourself-or-a-family-member-present-content-in-a-clear-accessible-format-using-cards-callout-boxes-and-short-readable-sections-consistent-with-the-existing-warm-teal-green-design-system",
+      "title": "Create a new 'Healthcare Challenges' informational page (e.g., ChallengesPage.tsx) that educates users about common healthcare problems and obstacles people face when navigating the system. Include sections covering topics such as: understanding why healthcare is confusing and expensive, common barriers to care (cost, lack of insurance, language, transportation), what to do when you can't afford care, how to avoid common pitfalls with insurance and billing, and tips for advocating for yourself or a family member. Present content in a clear, accessible format using cards, callout boxes, and short readable sections consistent with the existing warm teal-green design system.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-navigation-link-to-the-new-healthcare-challenges-page-in-navigation-tsx-and-include-a-quick-link-card-for-it-on-the-homepage-so-users-can-discover-it-from-the-main-entry-points-of-the-app",
+      "title": "Add a navigation link to the new Healthcare Challenges page in Navigation.tsx and include a quick-link card for it on the HomePage so users can discover it from the main entry points of the app.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-resourcespage-tsx-remove-all-hardcoded-leominster-massachusetts-resource-entries-from-the-static-fallback-data-array-and-replace-them-with-generically-named-entries-e-g-local-community-health-center-free-clinic-federally-qualified-health-center-with-no-city-state-specific-addresses-or-zip-codes-remove-any-latitude-longitude-values-tied-specifically-to-the-leominster-area-and-replace-with-null-omitted-values-on-the-fallback-entries-since-their-location-is-unknown-without-user-input",
+      "title": "In ResourcesPage.tsx, remove all hardcoded Leominster/Massachusetts resource entries from the static fallback data array and replace them with generically named entries (e.g., 'Local Community Health Center', 'Free Clinic', 'Federally Qualified Health Center') with no city/state-specific addresses or zip codes. Remove any latitude/longitude values tied specifically to the Leominster area and replace with null/omitted values on the fallback entries, since their location is unknown without user input.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-aboutpage-tsx-remove-all-references-to-leominster-massachusetts-leominster-ma-and-surrounding-massachusetts-communities-from-the-page-text-mission-statements-service-area-descriptions-and-vision-section-replace-them-with-universal-language-such-as-your-community-communities-across-the-country-people-everywhere-or-wherever-you-are-the-long-term-vision-text-should-reflect-a-mission-applicable-to-all-users-regardless-of-location",
+      "title": "In AboutPage.tsx, remove all references to 'Leominster', 'Massachusetts', 'Leominster, MA', and 'surrounding Massachusetts communities' from the page text, mission statements, service area descriptions, and vision section. Replace them with universal language such as 'your community', 'communities across the country', 'people everywhere', or 'wherever you are'. The long-term vision text should reflect a mission applicable to all users regardless of location.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-audit-all-remaining-frontend-files-including-homepage-tsx-navigation-tsx-herosection-tsx-findcarepage-tsx-financialassistancepage-tsx-challengespage-tsx-medicalbillguidepage-tsx-insuranceguidepage-tsx-navigationtoolspage-tsx-appointmentpreppage-tsx-and-any-other-page-or-component-files-and-remove-every-occurrence-of-leominster-massachusetts-and-ma-used-as-a-state-reference-replace-with-neutral-universal-language-e-g-your-area-local-community-nationwide-across-the-country-or-simply-omit-location-qualifiers-where-not-needed-also-update-index-html-page-title-or-meta-descriptions-if-they-reference-these-locations",
+      "title": "Audit all remaining frontend files — including HomePage.tsx, Navigation.tsx, HeroSection.tsx, FindCarePage.tsx, FinancialAssistancePage.tsx, ChallengesPage.tsx, MedicalBillGuidePage.tsx, InsuranceGuidePage.tsx, NavigationToolsPage.tsx, AppointmentPrepPage.tsx, and any other page or component files — and remove every occurrence of 'Leominster', 'Massachusetts', and 'MA' (used as a state reference). Replace with neutral, universal language (e.g., 'your area', 'local community', 'nationwide', 'across the country', or simply omit location qualifiers where not needed). Also update index.html page title or meta descriptions if they reference these locations.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-financialassistancepage-tsx-update-the-static-fallback-list-of-financial-assistance-programs-to-replace-or-supplement-massachusetts-specific-programs-masshealth-health-safety-net-mass-general-brigham-charity-care-etc-with-generically-named-equivalents-applicable-anywhere-in-the-us-e-g-state-medicaid-program-children-s-health-insurance-program-chip-hospital-charity-care-financial-assistance-community-health-center-sliding-scale-prescription-assistance-programs-update-program-descriptions-to-use-universal-language-referencing-your-state-or-your-local-hospital-rather-than-specific-massachusetts-entities",
+      "title": "In FinancialAssistancePage.tsx, update the static fallback list of financial assistance programs to replace or supplement Massachusetts-specific programs (MassHealth, Health Safety Net, Mass General Brigham charity care, etc.) with generically named equivalents applicable anywhere in the US (e.g., 'State Medicaid Program', 'Children's Health Insurance Program (CHIP)', 'Hospital Charity Care / Financial Assistance', 'Community Health Center Sliding Scale', 'Prescription Assistance Programs'). Update program descriptions to use universal language referencing 'your state' or 'your local hospital' rather than specific Massachusetts entities.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-perform-a-full-codebase-audit-and-remove-every-occurrence-of-the-words-leominster-and-massachusetts-including-abbreviation-ma-used-as-a-state-reference-from-all-frontend-source-files-pages-components-hooks-utilities-index-html-and-any-other-file-under-the-frontend-directory-replace-location-specific-text-with-neutral-universal-language-e-g-your-community-your-area-local-community-across-the-country-or-omit-the-qualifier-entirely-files-to-check-include-but-are-not-limited-to-homepage-tsx-navigation-tsx-herosection-tsx-findcarepage-tsx-financialassistancepage-tsx-challengespage-tsx-medicalbillguidepage-tsx-insuranceguidepage-tsx-navigationtoolspage-tsx-appointmentpreppage-tsx-aboutpage-tsx-resourcespage-tsx-and-index-html",
+      "title": "Perform a full codebase audit and remove every occurrence of the words 'Leominster' and 'Massachusetts' (including abbreviation 'MA' used as a state reference) from all frontend source files — pages, components, hooks, utilities, index.html, and any other file under the frontend directory. Replace location-specific text with neutral, universal language (e.g., 'your community', 'your area', 'local community', 'across the country', or omit the qualifier entirely). Files to check include but are not limited to: HomePage.tsx, Navigation.tsx, HeroSection.tsx, FindCarePage.tsx, FinancialAssistancePage.tsx, ChallengesPage.tsx, MedicalBillGuidePage.tsx, InsuranceGuidePage.tsx, NavigationToolsPage.tsx, AppointmentPrepPage.tsx, AboutPage.tsx, ResourcesPage.tsx, and index.html.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-informational-page-e-g-rightspage-tsx-titled-know-your-healthcare-rights-that-educates-users-about-their-fundamental-rights-as-patients-and-healthcare-consumers-include-sections-covering-1-the-right-to-receive-emergency-care-regardless-of-insurance-status-or-ability-to-pay-2-the-right-to-receive-an-itemized-bill-and-dispute-charges-3-the-right-to-request-an-interpreter-or-language-assistance-services-4-the-right-to-access-and-obtain-copies-of-your-medical-records-5-the-right-to-a-second-opinion-6-the-right-to-appeal-insurance-denials-and-7-protections-against-surprise-billing-present-content-using-cards-callout-boxes-and-short-readable-sections-consistent-with-the-existing-warm-teal-green-design-system-matching-the-style-of-challengespage-tsx-and-other-informational-pages-in-the-app",
+      "title": "Create a new informational page (e.g., RightsPage.tsx) titled 'Know Your Healthcare Rights' that educates users about their fundamental rights as patients and healthcare consumers. Include sections covering: (1) the right to receive emergency care regardless of insurance status or ability to pay, (2) the right to receive an itemized bill and dispute charges, (3) the right to request an interpreter or language assistance services, (4) the right to access and obtain copies of your medical records, (5) the right to a second opinion, (6) the right to appeal insurance denials, and (7) protections against surprise billing. Present content using cards, callout boxes, and short readable sections consistent with the existing warm teal-green design system (matching the style of ChallengesPage.tsx and other informational pages in the app).",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-register-the-new-rights-page-as-a-route-in-app-tsx-e-g-at-path-healthcare-rights-and-add-a-navigation-link-for-it-in-navigation-tsx-so-users-can-discover-and-access-it-from-the-persistent-site-wide-nav-bar-additionally-add-a-quick-link-card-for-the-rights-page-on-the-homepage-quick-links-grid-so-users-can-find-it-from-the-main-entry-point-of-the-app",
+      "title": "Register the new Rights page as a route in App.tsx (e.g., at path '/healthcare-rights') and add a navigation link for it in Navigation.tsx so users can discover and access it from the persistent site-wide nav bar. Additionally, add a quick-link card for the Rights page on the HomePage quick-links grid so users can find it from the main entry point of the app.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -281,6 +353,40 @@
     {
       "id": "AR-22",
       "summary": "When a user enters a zip code or address (e.g., 'Miami'), actually fetch and display real nearby healthcare resources in or near that location — not just filter existing hardcoded data. Integrate a geocoding or location-based lookup so results reflect places near the user's entered location.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Add a new informational section to the website that provides users with general information about common healthcare problems, challenges, and related topics to help them better understand and navigate the healthcare system.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Remove all references to Leominster, MA and Massachusetts throughout the app (pages, text, descriptions, about/vision section) and replace with general/universal language so the app is applicable to users everywhere, not just a specific location.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "In backend/main.mo, remove all hardcoded references to 'Leominster', 'Massachusetts', 'MA', and zip code '01453' from community resource initialization data, comments, and any other string literals. Replace location-specific resource entries with generically named placeholder entries representing common community resource types (e.g., 'Local Community Health Center', 'Free Clinic', 'Hospital Financial Assistance Office') with no city/state assumption. Update any comments or descriptions that mention Leominster or Massachusetts to use universal language.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Perform a full audit of backend/main.mo and remove every occurrence of the words 'Leominster', 'Massachusetts', 'MA' (as a state reference), and zip code '01453' from all string literals, comments, resource initialization data, and any other location-specific content. Replace hardcoded Leominster-area resource entries with generically named entries (e.g., 'Local Community Health Center', 'Free Clinic', 'Hospital Financial Assistance Office') using no city- or state-specific language. Update any inline comments that reference these locations to use universal language.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Add another informational page to the app (content/topic not yet specified by user).",
       "reqIds": [],
       "status": "pending"
     }

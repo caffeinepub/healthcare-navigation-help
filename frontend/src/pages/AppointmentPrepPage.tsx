@@ -1,119 +1,198 @@
 import { useState } from 'react';
-import { Printer, ClipboardList } from 'lucide-react';
+import { ClipboardList, CheckCircle, Circle, FileText, MessageSquare, Shield } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChecklistSection, type ChecklistItem } from '../components/ChecklistSection';
-import { ProgressIndicator } from '../components/ProgressIndicator';
 
-const checklistData: { title: string; icon: string; items: ChecklistItem[] }[] = [
+interface ChecklistItem {
+  id: string;
+  text: string;
+  checked: boolean;
+}
+
+const initialChecklist: ChecklistItem[] = [
+  { id: '1', text: 'Bring a valid photo ID', checked: false },
+  { id: '2', text: 'Bring your insurance card (if you have one)', checked: false },
+  { id: '3', text: 'Bring a list of all current medications and dosages', checked: false },
+  { id: '4', text: 'Bring any relevant medical records or test results', checked: false },
+  { id: '5', text: 'Write down your symptoms and when they started', checked: false },
+  { id: '6', text: 'Prepare a list of questions to ask your doctor', checked: false },
+  { id: '7', text: 'Know your family medical history if relevant', checked: false },
+  { id: '8', text: 'Arrange transportation to and from the appointment', checked: false },
+  { id: '9', text: 'Confirm the appointment time and location', checked: false },
+  { id: '10', text: 'Bring a trusted person for support if needed', checked: false },
+];
+
+const questionsToAsk = [
+  'What is my diagnosis, and what does it mean?',
+  'What are my treatment options?',
+  'What are the risks and benefits of each option?',
+  'Are there any lifestyle changes I should make?',
+  'What happens if I don\'t get treatment?',
+  'Are there generic versions of any medications prescribed?',
+  'When should I follow up, and what symptoms should prompt me to call sooner?',
+  'Can you explain this in simpler terms?',
+];
+
+const advocacyTips = [
   {
-    title: 'Documents to Bring',
-    icon: '📋',
-    items: [
-      { id: 'doc-1', label: 'Insurance card (front and back)', detail: 'Bring your most current insurance card. If you have multiple, bring all of them.' },
-      { id: 'doc-2', label: 'Photo ID (driver\'s license or state ID)', detail: 'Required for identity verification at most healthcare facilities.' },
-      { id: 'doc-3', label: 'List of current medications', detail: 'Include medication name, dosage, and how often you take it. Include vitamins and supplements.' },
-      { id: 'doc-4', label: 'Referral paperwork (if required)', detail: 'Check with your insurance if a referral is needed before your specialist visit.' },
-      { id: 'doc-5', label: 'Previous medical records or test results', detail: 'Especially relevant if seeing a new provider or specialist.' },
-      { id: 'doc-6', label: 'Emergency contact information', detail: 'Name and phone number of someone to contact if needed.' },
-    ],
+    icon: MessageSquare,
+    title: 'Speak Up',
+    description:
+      "Don't be afraid to ask questions or say you don't understand. It's your right to have clear explanations of your care.",
   },
   {
-    title: 'Questions to Ask Your Provider',
-    icon: '❓',
-    items: [
-      { id: 'q-1', label: 'What is my diagnosis or what do you think is wrong?', detail: 'Ask them to explain in plain language, not medical jargon.' },
-      { id: 'q-2', label: 'What are my treatment options?', detail: 'Ask about all options, including doing nothing, and the pros and cons of each.' },
-      { id: 'q-3', label: 'What happens if I don\'t treat this?', detail: 'Understanding the risk of inaction helps you make an informed decision.' },
-      { id: 'q-4', label: 'Are there any tests needed? Why?', detail: 'Ask what the test is for and what happens based on different results.' },
-      { id: 'q-5', label: 'What are the expected costs?', detail: 'Ask about costs before agreeing to tests or procedures. You can ask for a cost estimate.' },
-      { id: 'q-6', label: 'When should I follow up or call if things don\'t improve?', detail: 'Get specific guidance on what symptoms to watch for and when to seek further care.' },
-    ],
+    icon: FileText,
+    title: 'Request Records',
+    description:
+      'You have the right to access your medical records. Request copies after each visit to keep track of your health history.',
   },
   {
-    title: 'Personal Advocacy Tips',
-    icon: '💪',
-    items: [
-      { id: 'adv-1', label: 'Write down your symptoms before the visit', detail: 'Note when they started, how severe they are, and what makes them better or worse.' },
-      { id: 'adv-2', label: 'Bring a trusted person with you if possible', detail: 'A friend or family member can help you remember information and ask questions.' },
-      { id: 'adv-3', label: 'Take notes during the appointment', detail: 'Write down the diagnosis, treatment plan, and any instructions given.' },
-      { id: 'adv-4', label: 'Ask for written instructions or a visit summary', detail: 'Most providers can give you a printed or electronic summary of your visit.' },
-      { id: 'adv-5', label: 'Don\'t leave until you understand the next steps', detail: 'It\'s okay to ask the provider to repeat or clarify anything you didn\'t understand.' },
-    ],
+    icon: Shield,
+    title: 'Know Your Rights',
+    description:
+      'You have the right to a second opinion, to refuse treatment, and to be treated with dignity and respect regardless of your background.',
   },
 ];
 
-const allItems = checklistData.flatMap((section) => section.items);
+export default function AppointmentPrepPage() {
+  const [checklist, setChecklist] = useState<ChecklistItem[]>(initialChecklist);
 
-export function AppointmentPrepPage() {
-  const [checked, setChecked] = useState<Record<string, boolean>>({});
-
-  const toggle = (id: string) => {
-    setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggleItem = (id: string) => {
+    setChecklist((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, checked: !item.checked } : item))
+    );
   };
 
-  const completedCount = Object.values(checked).filter(Boolean).length;
-
-  const handlePrint = () => {
-    window.print();
-  };
+  const completedCount = checklist.filter((i) => i.checked).length;
+  const progress = Math.round((completedCount / checklist.length) * 100);
 
   return (
     <main className="py-12">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <div className="flex items-center gap-2 text-primary text-sm font-semibold mb-3">
-              <ClipboardList className="w-4 h-4" />
-              Appointment Preparation
-            </div>
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
-                  Appointment Checklist
-                </h1>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  Use this checklist to prepare for your doctor or hospital visit. Check off each item
-                  as you complete it. You can print this page to take with you.
-                </p>
+        {/* Header */}
+        <div className="max-w-3xl mb-10">
+          <div className="flex items-center gap-2 text-primary text-sm font-semibold mb-3">
+            <ClipboardList className="w-4 h-4" />
+            Appointment Preparation
+          </div>
+          <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+            Prepare for Your Appointment
+          </h1>
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Be prepared and confident at your next healthcare appointment. Use this checklist to
+            make the most of your visit.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
+          {/* Checklist */}
+          <Card className="border-border">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <ClipboardList className="h-5 w-5 text-primary" />
+                  Pre-Appointment Checklist
+                </CardTitle>
+                <span className="text-sm text-muted-foreground">
+                  {completedCount}/{checklist.length} done
+                </span>
               </div>
+              {/* Progress bar */}
+              <div className="w-full bg-muted rounded-full h-2 mt-2">
+                <div
+                  className="bg-primary h-2 rounded-full transition-all"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-3">
+                {checklist.map((item) => (
+                  <li
+                    key={item.id}
+                    className="flex items-start gap-3 cursor-pointer"
+                    onClick={() => toggleItem(item.id)}
+                  >
+                    {item.checked ? (
+                      <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    ) : (
+                      <Circle className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
+                    )}
+                    <span
+                      className={`text-sm ${
+                        item.checked ? 'line-through text-muted-foreground' : 'text-foreground'
+                      }`}
+                    >
+                      {item.text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              {completedCount === checklist.length && (
+                <div className="mt-4 p-3 bg-primary/10 rounded-lg text-center">
+                  <p className="text-sm font-medium text-primary">
+                    ✓ You're ready for your appointment!
+                  </p>
+                </div>
+              )}
               <Button
                 variant="outline"
-                onClick={handlePrint}
-                className="shrink-0 no-print font-semibold"
+                size="sm"
+                className="mt-4 w-full"
+                onClick={() =>
+                  setChecklist((prev) => prev.map((i) => ({ ...i, checked: false })))
+                }
               >
-                <Printer className="w-4 h-4 mr-2" />
-                Print
+                Reset Checklist
               </Button>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          {/* Progress */}
-          <div className="mb-10">
-            <ProgressIndicator completed={completedCount} total={allItems.length} />
-          </div>
-
-          {/* Checklist Sections */}
-          {checklistData.map((section) => (
-            <ChecklistSection
-              key={section.title}
-              title={section.title}
-              icon={section.icon}
-              items={section.items}
-              checked={checked}
-              onToggle={toggle}
-            />
-          ))}
-
-          {/* Tip */}
-          <div className="bg-secondary rounded-xl p-5 border border-border mt-4">
-            <p className="text-sm text-foreground/80">
-              <span className="font-bold text-primary">💡 Remember: </span>
-              You are your own best advocate. It's always okay to ask questions, request clarification,
-              or ask for a second opinion. Healthcare providers want you to understand your care.
-            </p>
-          </div>
+          {/* Questions to Ask */}
+          <Card className="border-border">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-primary" />
+                Questions to Ask Your Doctor
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {questionsToAsk.map((q, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <span className="text-primary font-bold mt-0.5">{idx + 1}.</span>
+                    {q}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
         </div>
+
+        {/* Advocacy Tips */}
+        <section className="mt-8 max-w-5xl">
+          <h2 className="text-xl font-bold mb-4 text-foreground">Patient Advocacy Tips</h2>
+          <div className="grid gap-4 md:grid-cols-3">
+            {advocacyTips.map((tip) => {
+              const Icon = tip.icon;
+              return (
+                <Card key={tip.title} className="border-border">
+                  <CardHeader className="pb-2">
+                    <div className="flex items-center gap-2">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <Icon className="h-4 w-4 text-primary" />
+                      </div>
+                      <CardTitle className="text-sm">{tip.title}</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-xs text-muted-foreground">{tip.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </section>
       </div>
     </main>
   );

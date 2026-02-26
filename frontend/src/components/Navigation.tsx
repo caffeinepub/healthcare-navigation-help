@@ -13,6 +13,8 @@ const navLinks = [
   { label: 'Financial Help', path: '/financial-assistance' },
   { label: 'Resources', path: '/resources' },
   { label: 'Nav Tools', path: '/navigation-tools' },
+  { label: 'Challenges', path: '/challenges' },
+  { label: 'Know Your Rights', path: '/healthcare-rights' },
   { label: 'About', path: '/about' },
 ];
 
@@ -52,7 +54,7 @@ export function Navigation() {
                 Healthcare Navigation
               </span>
               <span className="text-xs text-muted-foreground font-medium tracking-wide">
-                Help · Leominster, MA
+                Help · Nationwide
               </span>
             </div>
           </Link>
@@ -203,8 +205,8 @@ export function Footer() {
               <span className="font-serif font-bold text-primary">Healthcare Navigation Help</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Helping individuals and families in Leominster, MA and surrounding communities navigate
-              healthcare with confidence.
+              Helping individuals and families navigate healthcare with confidence — wherever they
+              are.
             </p>
             {/* Creator & Contact Info */}
             <div className="mt-4 pt-4 border-t border-border/60">
@@ -226,6 +228,8 @@ export function Footer() {
               <li><Link to="/insurance-guide" className="hover:text-primary transition-colors">Insurance Guide</Link></li>
               <li><Link to="/appointment-prep" className="hover:text-primary transition-colors">Appointment Prep</Link></li>
               <li><Link to="/medical-bills" className="hover:text-primary transition-colors">Medical Bill Guide</Link></li>
+              <li><Link to="/challenges" className="hover:text-primary transition-colors">Healthcare Challenges</Link></li>
+              <li><Link to="/healthcare-rights" className="hover:text-primary transition-colors">Know Your Rights</Link></li>
             </ul>
           </div>
           <div>
@@ -239,7 +243,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
-          <p>© {year} Healthcare Navigation Help · Leominster, MA</p>
+          <p>© {year} Healthcare Navigation Help</p>
           <p className="flex items-center gap-1">
             Built with <Heart className="w-3.5 h-3.5 text-accent-coral fill-current" /> using{' '}
             <a

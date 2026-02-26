@@ -2,7 +2,7 @@ import { Compass } from 'lucide-react';
 import { JourneyCard } from '../components/JourneyCard';
 import { journeys } from '../data/journeys';
 
-export function NavigationToolsPage() {
+export default function NavigationToolsPage() {
   return (
     <main className="py-12">
       <div className="container mx-auto px-4">
@@ -35,19 +35,31 @@ export function NavigationToolsPage() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
             <div>
-              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-3">1</div>
+              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-3">
+                1
+              </div>
               <h3 className="font-semibold text-foreground mb-2">Choose Your Situation</h3>
-              <p className="text-sm text-muted-foreground">Select the journey that best matches what you're going through right now.</p>
+              <p className="text-sm text-muted-foreground">
+                Select the journey that best matches what you're going through right now.
+              </p>
             </div>
             <div>
-              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-3">2</div>
+              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-3">
+                2
+              </div>
               <h3 className="font-semibold text-foreground mb-2">Follow the Steps</h3>
-              <p className="text-sm text-muted-foreground">Each step explains what to do, why it matters, and what to expect.</p>
+              <p className="text-sm text-muted-foreground">
+                Each step explains what to do, why it matters, and what to expect.
+              </p>
             </div>
             <div>
-              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-3">3</div>
+              <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-3">
+                3
+              </div>
               <h3 className="font-semibold text-foreground mb-2">Take Action</h3>
-              <p className="text-sm text-muted-foreground">Use the links and tips in each step to take real action with confidence.</p>
+              <p className="text-sm text-muted-foreground">
+                Use the links and tips in each step to take real action with confidence.
+              </p>
             </div>
           </div>
         </div>
